@@ -1,15 +1,30 @@
 <%- include("partials/header") %> 
-   
+<ul>
     <% tad.forEach(function(tadd){ %>
-        <div>name: <%= tadd.name %></div>
-      
-        <div>sub: <%= tadd.sub.subn %></div>
+        <li>
+            
         <br>
+        <div class="todolist">
+            <div class = "cover-img">
+                <div>name: <%= tadd.name %></div>
+            </div>
+            <div class="content">
+                <form class="add">
+                    <input type="text" name="add" placeholder="Add u list">
+                    <div class="input-button">
+                        <a href="#0" class="add-todo">
+                           <i class="fa fa-plus add"></i>
+                        </a>
+                       
+                    </div>
+                </form>
+            </div>
+        <%- include("top",{sub:tadd.sub}) %>
+        </div>
+        </li>
         
-        <%- include("top",{sub:{subn:tadd.sub.subn,subs:tadd.sub.subs}}) %>
-        <form action="/new" method="post">
-            <button type="submit" name = "n" value="20"></button>
-        </form>
     <% }); %>
+</ul>
+    
     
 <%- include("partials/footer") %> 

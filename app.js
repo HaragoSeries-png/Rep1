@@ -12,10 +12,12 @@ mongoose.connect("mongodb://localhost:27017/test", {useNewUrlParser:true});
 
 let tadatable = new mongoose.Schema({
     name:String,
-    sub:{
+    sub:[
+        {
         subn:String,
         subs:String
-    }
+        }
+    ]
 
 })  
 let Tada = mongoose.model("Tada",tadatable);  
@@ -74,7 +76,8 @@ app.get("/new",function(req,res){
 app.post("/new",function(req,res){
     console.log("welpost")
     let nn = req.body.n;
-    console.log(nn)
+    let idd = req.body.value;
+    console.log(idd);
     res.redirect("/new")
 })
 
