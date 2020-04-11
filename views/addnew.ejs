@@ -1,9 +1,8 @@
 <%- include("partials/header") %> 
-    <form action="/ricefield" method="post">
-        <div>add to card number </div>    
-        <input type="text" class="form-control" name ="n">
+    <form action="/todo" method="post">
+        <div>add to card number </div>            
         <input type="text" class="form-control" name ="s1">
         <input type="text" class="form-control" name ="s2">           
-        <button type="submit"></button>
+        <button type="submit" name="id" value=<%= id %> </button>
     </form>
 <%- include("partials/footer") %> 

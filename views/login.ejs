@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="login.css">
+    </head>
+    <body>
+        <%- include("partials/navbar") %>
+        <div class="loginBox" >
+            <img src="logo-1.png" class="logo">
+                <h1>LOG IN</h1>
+                <form action="/login" method="post">
+                    <p>Username</p>
+                    <input type="text" name="username" placeholder="Enter Username">
+                    <p>Password</p>
+                    <input type="password" name="password" placeholder="Enter Password">
+                    <input type="submit" name="submit" value="Login">
+                    <a href="#">Forget Password</a>
+
+
+                </form>
+        </div>
+        
+
+
+        <script src="" async defer></script>
+    </body>
+</html>

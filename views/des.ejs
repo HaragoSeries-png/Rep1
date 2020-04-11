@@ -9,13 +9,12 @@
                 <div>name: <%= tadd.name %></div>
             </div>
             <div class="content">
-                <form class="add">
-                    <input type="text" name="add" placeholder="Add u list">
+                <form class="add" action="/new" method="post">
+                    
                     <div class="input-button">
-                        <a href="#0" class="add-todo">
-                           <i class="fa fa-plus add"></i>
-                        </a>
-                       
+                        <a href="/new/<%= tadd._id %> " class="add-todo">
+                           <button type="submit" name= 'id' value='<%=tadd._id %>' <i class="fa fa-plus add"></i></button>
+                        </a>     
                     </div>
                 </form>
             </div>
