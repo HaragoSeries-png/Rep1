@@ -1,5 +1,7 @@
 <%- include("partials/header") %> 
-<ul>
+<%- include("partials/tod") %>
+<h1><%= uid %></h1>
+<ul> 
     <% tad.forEach(function(tadd){ %>
         <li>
             
@@ -9,21 +11,27 @@
                 <div>name: <%= tadd.name %></div>
             </div>
             <div class="content">
-                <form class="add" action="/new" method="post">
+                <form class="add" action="/new/<%= uid  %>" method="post">
                     
-                    <div class="input-button">
-                        <a href="/new/<%= tadd._id %> " class="add-todo">
-                           <button type="submit" name= 'id' value='<%=tadd._id %>' <i class="fa fa-plus add"></i></button>
+                    <div class="input-button " >
+                        <a  class="add-todo" href="/new/<%= uid %>/<%=tadd._id %>"></a>
+                           <button type="submit" name='id' value='<%=tadd._id %>'><i class="fa fa-plus add"></i></button>
                         </a>     
                     </div>
                 </form>
             </div>
-        <%- include("top",{sub:tadd.sub}) %>
+        <%- include("top",{sub:tadd.sub,id:uid,cid:tadd._id}) %>
         </div>
-        </li>
+    </li>
         
-    <% }); %>
+    <% }) %>
+    <li>
+        <form action="/newcard" method="post" >
+            <input type="text" name="cname" >
+            <button type="submit" name="uid" value ='<%= uid %>'><i class="fa fa-plus add"></i></button>
+        </form>
+    </li>
 </ul>
     
     
-<%- include("partials/footer") %> 
+<%- include("partials/footer") %>

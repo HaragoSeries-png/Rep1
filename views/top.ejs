@@ -1,27 +1,21 @@
 <%- include("partials/header") %>
-    
+<%- include("partials/tod") %>    
         <div class ="notComp">
             <h3>Todo</h3>
                 <ul>
                     <% sub.forEach(function(subb){ %>
-                    <div class="task"><%= subb.subn %>  
-                    <i class="fa fa-trash"></i>
-                    <i class="fa fa-check"></i></div>
-                        <%})%>
+                        <div class="task"><%= subb._id %> 
+                            <form action="/del/<%= id %>/<%= cid %>/<%= subb._id %>" method="POST"></a>
+                                <button class="butt"><i class="fa fa-trash" role="button" inputmode="submit"></i></button>
+                            </form> 
+                        
+                        <i class="fa fa-check"></i></div>
+                    <%})%>
                 
-                </ul>
-                
-                
-                
-                 
-                
-            
-            
+                </ul>   
         </div>
     
-    
-       
-  
-        
-
 <%- include("partials/footer") %> 
+<script>
+   
+</script>

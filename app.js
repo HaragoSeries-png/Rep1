@@ -5,32 +5,24 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser")
 
 app.set("view engine","ejs");
-app.use(express.static(__dirname + "/public", {
-    index: false, 
-    immutable: true, 
-    cacheControl: true,
-    maxAge: "30d"
-}));
+app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
 
-mongoose.connect("mongodb://localhost:27017/test", {useNewUrlParser:true});
+mongoose.connect("mongodb+srv://chanon:132231@cluster0-broqy.mongodb.net/test?retryWrites=true&w=majority", {useNewUrlParser:true});
 
 let tadatable = new mongoose.Schema({
     name:String,
     sub:[
-        {
-        subn:String,
-        subs:String
-        }
-    ]
+        {subn:String,subs:String}
 
+    ]
 })  
 let Tada = mongoose.model("Tada",tadatable);
 
 let usertable = new mongoose.Schema({
     username:String,
     password:String,
-    card:[String]
+    card:[],
 })
 let User = mongoose.model("User",usertable);
     
@@ -62,7 +54,7 @@ app.post("/signup",function(req,res){
     let ut = req.body.username;
     let pt = req.body.password;
     User.find({username:ut},function(err,result){
-        if(result.username==null){
+        if(result.username!=null){
             res.redirect("/signup")
         }
         else{
@@ -82,15 +74,14 @@ app.get("/login",function(req,res){
 })
 app.post("/login",function(req,res){
     let tu = req.body.username
-    console.log(tu)
+
     let tp = req.body.password
-    console.log(tp)
-    console.log(User.password)
+ 
     User.find({username:tu},function(err,u){
-        console.log(u[0].password+"tp "+tp)
+        
         if(tp==u[0].password){
-            console.log("RRRR")
-            res.redirect("/todo")
+           
+            res.redirect("/todo/"+u[0]._id)
         }
         else{
             res.redirect("/login")
@@ -100,15 +91,33 @@ app.post("/login",function(req,res){
 })
 
 
-app.get("/todo",function(req,res){
-    Tada.find({},function(error,ta){
-        let tn = ta
-        let ts = ta.sub
-        res.render("zone1",{tada:ta,sub:ts})
+app.get("/todo/:id",function(req,res){
+    console.log(req.params.id)
+    User.findOne({_id:req.params.id},function(error,uid){ 
+        if(error){
+            throw error
+        }  
+        else{
+            console.log(uid);
+            Tada.find({_id:uid.card},function(error,ta){
+                if(error){
+                    throw error
+                }
+                else{
+                    
+                    let tn = ta
+            
+                    res.render("zone1",{tada:ta,id:req.params.id})
+                }
+                
+        })
+        }
+        
     })
     
+    
 })
-app.post("/todo",function(req,res){
+app.post("/todo/:uid",function(req,res){
     
     let id = req.body.id
     let ts1 = req.body.s1
@@ -122,24 +131,56 @@ app.post("/todo",function(req,res){
         console.log(tad)        
         tad.save()
     })    
-    res.redirect("/todo");
+    res.redirect("/todo/"+req.params.uid);
 })
 
 
-app.get("/new/:ido",function(req,res){
-    console.log(req.params.ido)
-    let idd = req.params.ido;
-    console.log("id is :" +idd);
-    res.render("addnew",{id:idd});   
+app.get("/new/:uid/:cid",function(req,res){
+    console.log("dic "+req.params.cid);
+    let tcid = req.params.cid;
+    let tuid = req.params.uid;
+    console.log("id is :" +tcid);
+    res.render("addnew",{cid:tcid,uid:tuid});   
 })
 
-app.post("/new",function(req,res){
+app.post("/new/:uid",function(req,res){
     console.log("welpost")
     let nn = req.body.n;
-    let idd = req.body.id;
-    console.log(idd);
-    res.redirect("/new/"+idd)
+    let cid = req.body.id;
+    console.log(cid);
+    res.redirect("/new/"+req.params.uid+"/"+cid)
 })
+ app.post("/newcard",function(req,res){
+     let tname = req.body.cname;
+     let tuser = req.body.uid;
+     
+     Tada.create({name:tname},function(err,r){
+       
+         User.findOne({_id:tuser},function(err,tt){
+             let cid = r._id;
+             
+             tt.card.push(cid)
+             tt.save()
+             
+             res.redirect("/todo/"+tuser)
+         })
+     })
+     
+ })
+ 
+ app.post("/del/:uid/:cid/:tid",function(req,res){
+     let ttid = req.params.tid;
+     let tcid = req.params.cid;
+     let tuid = req.params.uid;
+     
+    Tada.findOneAndUpdate({"sub._id":ttid},{$pull:{"sub":{_id:ttid}}},{"sub.$":1},function(err,task){
+            console.log(task.sub)       
+    })    
+    
+   
+     res.redirect("/todo/"+tuid)
+ })
+
 
 app.listen(3000, function(req,res){
     console.log("welcome to the Laboratory")
