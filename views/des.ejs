@@ -1,37 +1,44 @@
 <%- include("partials/header") %> 
 <%- include("partials/tod") %>
-<h1><%= uid %></h1>
-<ul> 
-    <% tad.forEach(function(tadd){ %>
-        <li>
-            
-        <br>
-        <div class="todolist">
-            <div class = "cover-img">
-                <div>name: <%= tadd.name %></div>
-            </div>
-            <div class="content">
-                <form class="add" action="/new/<%= uid  %>" method="post">
-                    
-                    <div class="input-button " >
-                        <a  class="add-todo" href="/new/<%= uid %>/<%=tadd._id %>"></a>
-                           <button type="submit" name='id' value='<%=tadd._id %>'><i class="fa fa-plus add"></i></button>
-                        </a>     
+<h1><%= user %></h1>
+<div class = "container"> 
+    <div class="row" style="display:flex; flex-wrap:wrap;">
+
+    
+        <% tad.forEach(function(tadd){ %>
+            <div class="tc col-md-3 col-sm-1 " >            
+                <div class="todolist ">
+                    <div class = "cover-img">
+                        <div>name: <%= tadd.name %></div>
+                            <form action="/delc/<%= id %>/<%= tadd._id %>" method="POST"></a>
+                                <button class="butt"><i class="fa fa-trash" role="button" inputmode="submit"></i></button>
+                                
+                            </form> 
+                        </div>
+                    <div class="content">
+                        <form class="add" action="/new/<%= uid  %>" method="post">
+                                
+                            <div class="input-button " >
+                                <a  class="add-todo" href="/new/<%= uid %>/<%=tadd._id %>"></a>
+                                <button type="submit" name='id' value='<%=tadd._id %>'><i class="fa fa-plus add"></i></button>
+                                </a>     
+                            </div>
+                        </form>
                     </div>
-                </form>
+                        <%- include("top",{sub:tadd.sub,id:uid,cid:tadd._id}) %>
+                </div>
             </div>
-        <%- include("top",{sub:tadd.sub,id:uid,cid:tadd._id}) %>
-        </div>
-    </li>
+            
         
     <% }) %>
-    <li>
-        <form action="/newcard" method="post" >
-            <input type="text" name="cname" >
-            <button type="submit" name="uid" value ='<%= uid %>'><i class="fa fa-plus add"></i></button>
-        </form>
-    </li>
-</ul>
+        <div class="tc col-md-3 col-sm-1">
+            <form action="/newcard" method="post" >
+                <input type="text" name="cname" >
+                <button type="submit" name="uid" value ='<%= uid %>'><i class="fa fa-plus add"></i></button>
+            </form>
+        </div>
+    </div>
+</div>
     
     
 <%- include("partials/footer") %>
