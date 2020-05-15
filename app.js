@@ -8,15 +8,20 @@ const User = require('./models/user'),
         flash = require('connect-flash'),
         passport = require('passport'),
         passportLocal = require('passport-local'),
-        passportLocalMongoose = require('passport-local-mongoose')
+        passportLocalMongoose = require('passport-local-mongoose'),
+        middleware = require("./middleware/mid")
 
 app.set("view engine","ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
 
 mongoose.connect("mongodb+srv://chanon:132231@cluster0-broqy.mongodb.net/test?retryWrites=true&w=majority", {useNewUrlParser:true});
-
-
+app.use(require('express-session')({
+    secret: 'CSS227',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(function(req,res,next){
@@ -99,7 +104,9 @@ app.post("/login",function(req,res,next){
     passport.authenticate('local',{failureRedirect:"/login"})(req,res,function(){
         
         console.log("autennnnnnnnnnn")
-        
+        next();
+    
+})},function(req, res){
     let tu = req.body.username
 
    
@@ -108,17 +115,20 @@ app.post("/login",function(req,res,next){
     User.find({username:tu},function(err,u){
         
        
-           console.log("pass"+u.password)
+           
             res.redirect("/todo/"+u[0]._id)
        
         
     }).limit(1)
-    
-})},function(req, res){
+})
+
+app.get("/logout",middleware.isLoggedIn,function(req,res){
+    req.logout();
+    res.redirect("/")
 })
 
 
-app.get("/todo/:id",function(req,res){
+app.get("/todo/:id",middleware.isLoggedIn,function(req,res){
     console.log(req.params.id)
     User.findOne({_id:req.params.id},function(error,uid){ 
         if(error){
@@ -143,7 +153,7 @@ app.get("/todo/:id",function(req,res){
     
     
 })
-app.post("/todo/:uid",function(req,res){
+app.post("/todo/:uid",middleware.isLoggedIn,function(req,res){
     
     let id = req.body.id
     let ts1 = req.body.s1
@@ -161,7 +171,7 @@ app.post("/todo/:uid",function(req,res){
 })
 
 
-app.get("/new/:uid/:cid",function(req,res){
+app.get("/new/:uid/:cid",middleware.isLoggedIn,function(req,res){
     console.log("dic "+req.params.cid);
     let tcid = req.params.cid;
     let tuid = req.params.uid;
@@ -169,14 +179,14 @@ app.get("/new/:uid/:cid",function(req,res){
     res.render("addnew",{cid:tcid,uid:tuid});   
 })
 
-app.post("/new/:uid",function(req,res){
+app.post("/new/:uid",middleware.isLoggedIn,function(req,res){
     console.log("welpost")
     let nn = req.body.n;
     let cid = req.body.id;
     console.log(cid);
     res.redirect("/new/"+req.params.uid+"/"+cid)
 })
- app.post("/newcard",function(req,res){
+ app.post("/newcard",middleware.isLoggedIn,function(req,res){
      let tname = req.body.cname;
      let tuser = req.body.uid;
      
@@ -194,7 +204,7 @@ app.post("/new/:uid",function(req,res){
      
  })
  
- app.post("/del/:uid/:cid/:tid",function(req,res){
+ app.post("/del/:uid/:cid/:tid",middleware.isLoggedIn,function(req,res){
      let ttid = req.params.tid;
      let tcid = req.params.cid;
      let tuid = req.params.uid;
@@ -206,14 +216,14 @@ app.post("/new/:uid",function(req,res){
    
      res.redirect("/todo/"+tuid)
  })
- app.post("/delc/:uid/:cid",function(req,res){
+ app.post("/delc/:uid/:cid",middleware.isLoggedIn,function(req,res){
     let tuid = req.params.uid;
     let tcid = req.params.cid;
     
     
    Tada.findOneAndDelete({"_id":tcid},function(err,task){
 
-           console.log(task)
+        console.log(task)
 
 })    
    

@@ -4,7 +4,10 @@ const   mongoose = require('mongoose'),
 let UserSchema = new mongoose.Schema({
     username:String,
     password:String,
-    card:[],
+    card:[{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Tada"
+    }],
 })
 UserSchema.plugin(passportLocalMongoose);
 
