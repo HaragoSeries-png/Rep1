@@ -9,7 +9,9 @@ const User = require('./models/user'),
         passport = require('passport'),
         passportLocal = require('passport-local'),
         passportLocalMongoose = require('passport-local-mongoose'),
-        middleware = require("./middleware/mid")
+        middleware = require("./middleware/mid"),
+        todoRoutes = require("./routes/todoo"),
+        indexRoutes = require("./routes/userr")
 
 app.set("view engine","ejs");
 app.use(express.static("public"));
@@ -49,7 +51,8 @@ passport.deserializeUser(User.deserializeUser());
 //             console.log(tada);
 //         }
 // });
-
+app.use("/",indexRoutes);
+app.use("/todo",todoRoutes);
  
 
 app.get("/",function(req,res){
@@ -57,179 +60,9 @@ app.get("/",function(req,res){
 })
 
 
-app.get("/signup",function(req,res){
-
-    res.render("signUp")
-})
-// app.post("/signup",function(req,res){
-//     let ut = req.body.username;
-//     let pt = req.body.password;
-//     User.find({username:ut},function(err,result){
-//         if(result.username!=null){
-//             res.redirect("/signup")
-//         }
-//         else{
-//             let data = {username:ut,password:pt}
-//             User.create(data,function(err,d){
-//                 console.log(d)
-//                 res.redirect("/login")
-//             })
-//         }
-//     })
-    
-// })
-app.post('/signup', function(req,res){
-    User.register(new User({username: req.body.username}), req.body.password, function(err, user){
-        if(err){
-            console.log(err);
-            return res.render('signup');
-        }
-        passport.authenticate('local')(req,res,function(){
-            console.log(user._id)
-            res.redirect('/gg');
-        });
-    });
-});
-
-app.get("/gg" ,function(req,res){
-
-    res.render("gg")
-})
 
 
-app.get("/login",function(req,res){
-    res.render("login")
-})
-app.post("/login",function(req,res,next){
-    passport.authenticate('local',{failureRedirect:"/login"})(req,res,function(){
-        
-        console.log("autennnnnnnnnnn")
-        next();
-    
-})},function(req, res){
-    let tu = req.body.username
 
-   
-    
- 
-    User.find({username:tu},function(err,u){
-        
-       
-           
-            res.redirect("/todo/"+u[0]._id)
-       
-        
-    }).limit(1)
-})
-
-app.get("/logout",middleware.isLoggedIn,function(req,res){
-    req.logout();
-    res.redirect("/")
-})
-
-
-app.get("/todo/:id",middleware.isLoggedIn,function(req,res){
-    console.log(req.params.id)
-    User.findOne({_id:req.params.id},function(error,uid){ 
-        if(error){
-            throw error
-        }  
-        else{
-            console.log(uid);
-            Tada.find({_id:uid.card},function(error,ta){
-                if(error){
-                    throw error
-                }
-                else{
-                    
-                    let tn = ta                    
-                    res.render("zone1",{tada:ta,id:req.params.id,user:uid.username})
-                }
-                
-        })
-        }
-        
-    })
-    
-    
-})
-app.post("/todo/:uid",middleware.isLoggedIn,function(req,res){
-    
-    let id = req.body.id
-    let ts1 = req.body.s1
-    let ts2 = req.body.s2
-    let su = {t1:ts1,t2:ts2}
-    console.log(id)
-    
-    Tada.findById(id,function(error,tad){
-        console.log(tad)
-        tad.sub.push({subn:ts1,subs:ts2})
-        console.log(tad)        
-        tad.save()
-    })    
-    res.redirect("/todo/"+req.params.uid);
-})
-
-
-app.get("/new/:uid/:cid",middleware.isLoggedIn,function(req,res){
-    console.log("dic "+req.params.cid);
-    let tcid = req.params.cid;
-    let tuid = req.params.uid;
-    console.log("id is :" +tcid);
-    res.render("addnew",{cid:tcid,uid:tuid});   
-})
-
-app.post("/new/:uid",middleware.isLoggedIn,function(req,res){
-    console.log("welpost")
-    let nn = req.body.n;
-    let cid = req.body.id;
-    console.log(cid);
-    res.redirect("/new/"+req.params.uid+"/"+cid)
-})
- app.post("/newcard",middleware.isLoggedIn,function(req,res){
-     let tname = req.body.cname;
-     let tuser = req.body.uid;
-     
-     Tada.create({name:tname},function(err,r){
-       
-         User.findOne({_id:tuser},function(err,tt){
-             let cid = r._id;
-             console.log(cid)
-             tt.card.push(cid)
-             tt.save()
-             
-             res.redirect("/todo/"+tuser)
-         })
-     })
-     
- })
- 
- app.post("/del/:uid/:cid/:tid",middleware.isLoggedIn,function(req,res){
-     let ttid = req.params.tid;
-     let tcid = req.params.cid;
-     let tuid = req.params.uid;
-     
-    Tada.findOneAndUpdate({"sub._id":ttid},{$pull:{"sub":{_id:ttid}}},{"sub.$":1},function(err,task){
-            console.log(task.sub)       
-    })    
-    
-   
-     res.redirect("/todo/"+tuid)
- })
- app.post("/delc/:uid/:cid",middleware.isLoggedIn,function(req,res){
-    let tuid = req.params.uid;
-    let tcid = req.params.cid;
-    
-    
-   Tada.findOneAndDelete({"_id":tcid},function(err,task){
-
-        console.log(task)
-
-})    
-   
-  
-    res.redirect("/todo/"+tuid)
-})
 
 app.listen(3000, function(req,res){
     console.log("welcome to the Laboratory")

@@ -4,22 +4,21 @@
             <h3>Todo</h3>
                 <ul >
                     <% sub.forEach(function(subb){ %>
-                        
+                        <form action="/todo/show/<%= id %>/<%= cid %>/<%= subb._id %>" method="POST">
                             <div class="task">
                             
                                 <span>
                                     <form action="/todo/del/<%= id %>/<%= cid %>/<%= subb._id %>" method="POST"><span><%= subb.tname %> </span>
                                         <button class="butt"><i class="fa fa-trash" role="button" inputmode="submit"></i></button>    
                                 
-                                    </form> 
-                                    <form action="/todo/show/<%= id %>/<%= cid %>/<%= subb._id %>" method="get">
-                                        <button class="butt"><i class="fa fa-check" role="button"></i></button>
-                                    
-                                    </form> 
+                                    </form>
                                 </span>   
-                               
+                                <form action="/todo/del/<%= id %>/<%= cid %>/<%= subb._id %>" method="POST">
+                                    
+                                    <i class="fa fa-check"></i>
+                                </form> 
                             </div>
-                        
+                        </form>
                         
                         
                     <%})%>

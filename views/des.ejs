@@ -1,22 +1,22 @@
 <%- include("partials/header") %> 
 <%- include("partials/tod") %>
 <h1><%= user %> <a href="/logout">logout</a></h1>
-<div class = "container"> 
+
     <div class="row" style="display:flex; flex-wrap:wrap;">
 
     
         <% tad.forEach(function(tadd){ %>
-            <div class="tc col-md-6 col-sm-12 col-lg-4" >            
+            <div class="tc col-md-6 col-sm-12 col-xs-12  col-xl-3" >            
                 <div class="todolist ">
                     <div class = "cover-img">
                         <div>name: <%= tadd.name %></div>
-                            <form action="/delc/<%= id %>/<%= tadd._id %>" method="POST"></a>
+                            <form action="/todo/delc/<%= id %>/<%= tadd._id %>" method="POST"></a>
                                 <button class="butt"><i class="fa fa-trash" role="button" inputmode="submit"></i></button>
                                 
                             </form> 
                         </div>
                     <div class="content">
-                        <form class="add" action="/new/<%= uid  %>" method="post">
+                        <form class="add" action="/todo/new/<%= uid  %>" method="post">
                                 
                             <div class="input-button " >
                                 <a  class="add-todo" href="/new/<%= uid %>/<%=tadd._id %>"></a>
@@ -25,20 +25,20 @@
                             </div>
                         </form>
                     </div>
-                    <%- include("top",{sub:tadd.sub,id:uid,cid:tadd._id}) %>
+                    <%- include("top",{sub:tadd.task,id:uid,cid:tadd._id}) %>
                 </div>
             </div>
             
         
     <% }) %>
         <div class="tc col-md-3 col-sm-1">
-            <form action="/newcard" method="post" >
+            <form action="/todo/newcard" method="post" >
                 <input type="text" name="cname" >
                 <button type="submit" name="uid" value ='<%= uid %>'><i class="fa fa-plus add"></i></button>
             </form>
         </div>
     </div>
-</div>
+
     
     
 <%- include("partials/footer") %>
