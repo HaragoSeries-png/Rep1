@@ -5,9 +5,8 @@ let tadatable = new mongoose.Schema({
     name:String,
     task:[
         {
-        tname:String,
-        tdate:String,
-        tdes:String
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Task"
         }
 
     ]

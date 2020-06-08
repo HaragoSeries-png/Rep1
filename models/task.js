@@ -1,15 +1,13 @@
 const   mongoose = require('mongoose'),
         passportLocalMongoose = require('passport-local-mongoose');
 
-let tadatable = new mongoose.Schema({
-    name:String,
-    task:[
-        {
+let tasktable = new mongoose.Schema({
+       
         tname:String,
         tdate:String,
-        tdes:String
-        }
-
-    ]
+        tdes:String,
+        tprio:String,
+        tiscom:String
+   
 })  
-module.exports = mongoose.model("Tada",tadatable);
+module.exports = mongoose.model("Task",tasktable);

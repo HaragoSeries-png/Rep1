@@ -1,16 +1,17 @@
 <%- include("partials/header") %> 
 <%- include("partials/tod") %>
-<h1><%= user %> <a href="/logout">logout</a></h1>
-
-    <div class="row" style="display:flex; flex-wrap:wrap;">
 
     
+
+<h1><%= user %> <a href="/logout">logout</a></h1>
+
+    <div class="row">  
         <% tad.forEach(function(tadd){ %>
-            <div class="tc col-md-6 col-sm-12 col-xs-12  col-xl-3" >            
+            <div class="tc col-md-6 col-sm-12 col-xl-4" >            
                 <div class="todolist ">
                     <div class = "cover-img">
-                        <div>name: <%= tadd.name %></div>
-                            <form action="/todo/delc/<%= id %>/<%= tadd._id %>" method="POST"></a>
+                        <div class="inline cardname"><%= tadd.name %></div>
+                            <form class="inline" action="/todo/delc/<%= id %>/<%= tadd._id %>" method="POST"></a>
                                 <button class="butt"><i class="fa fa-trash" role="button" inputmode="submit"></i></button>
                                 
                             </form> 
@@ -20,25 +21,23 @@
                                 
                             <div class="input-button " >
                                 <a  class="add-todo" href="/new/<%= uid %>/<%=tadd._id %>"></a>
-                                <button type="submit" name='id' value='<%=tadd._id %>'><i class="fa fa-plus add"></i></button>
+                                <button class="butt" type="submit" name='id' value='<%=tadd._id %>'><i class="fa fa-plus add"></i></button>
                                 </a>     
                             </div>
                         </form>
                     </div>
                     <%- include("top",{sub:tadd.task,id:uid,cid:tadd._id}) %>
                 </div>
-            </div>
-            
-        
-    <% }) %>
-        <div class="tc col-md-3 col-sm-1">
+            </div>        
+        <% }) %>
+        <div class="tc col-md-3 col-sm-1 t">
             <form action="/todo/newcard" method="post" >
                 <input type="text" name="cname" >
-                <button type="submit" name="uid" value ='<%= uid %>'><i class="fa fa-plus add"></i></button>
+                <button type="submit" name="uid" value ='<%= uid %>'class="butt" ><i class="fa fa-plus add"></i></button>
             </form>
         </div>
-    </div>
-
+    
+</div>
     
     
 <%- include("partials/footer") %>

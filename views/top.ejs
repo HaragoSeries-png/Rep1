@@ -1,23 +1,48 @@
 <%- include("partials/header") %>
-<%- include("partials/tod") %>    
+<%- include("partials/tod") %>   
+<style>
+.prio{  
+    position: inherit;  
+    margin-top: 25px;
+    margin-bottom: -8px; 
+    margin-left: -8px;  
+    width: 112px;
+    height: 8px;
+}
+.box{
+    /* border-color: aliceblue;
+    border-style: solid;
+    border-width: 2px; */
+    border-radius: 16px;
+}
+</style> 
         <div class ="notComp ">
             <h3>Todo</h3>
                 <ul >
                     <% sub.forEach(function(subb){ %>
-                        
+
                             <div class="task">
                             
-                                <span>
-                                    <form action="/todo/del/<%= id %>/<%= cid %>/<%= subb._id %>" method="POST"><span><%= subb.tname %> </span>
+                                <div>
+                                    <div>
+                                        <form class="innline" action="/todo/show/<%= id %>/<%= cid %>/<%= subb._id %>" method="get">
+                                            <button class="butt"><span class=""><%= subb.tname %> </span></button>                                        
+                                        </form>
+                                        
+                                        
+                                        <form class="inline" action="/todo/del/<%= id %>/<%= cid %>/<%= subb._id %>" method="POST">
                                         <button class="butt"><i class="fa fa-trash" role="button" inputmode="submit"></i></button>    
                                 
-                                    </form> 
-                                    <form action="/todo/show/<%= id %>/<%= cid %>/<%= subb._id %>" method="get">
-                                        <button class="butt"><i class="fa fa-check" role="button"></i></button>
+                                        </form> 
+                                        <form class="inline" action="/todo/show/<%= id %>/<%= cid %>/<%= subb._id %>" method="get">
+                                            
+                                            <button class="butt"><i class="fa fa-check" role="button"></i></button>
+                                                                                       
+                                        </form> 
+                                    </div>
                                     
-                                    </form> 
-                                </span>   
-                               
+                                </div>   
+                               <div class="box prio" style="background-color:<%= subb.tprio %>"></div>
                             </div>
                         
                         
