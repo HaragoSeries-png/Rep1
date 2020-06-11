@@ -11,29 +11,29 @@
                 <div class="todolist ">
                     <div class = "cover-img">
                         <div class="inline cardname"><%= tadd.name %></div>
-                            <form class="inline" action="/todo/delc/<%= id %>/<%= tadd._id %>" method="POST"></a>
+                            <form class="inline" action="/todo/delc/<%= id %>/<%= tadd._id %>?_method=DELETE" method="POST"></a>
                                 <button class="butt"><i class="fa fa-trash" role="button" inputmode="submit"></i></button>
                                 
                             </form> 
                         </div>
                     <div class="content">
-                        <form class="add" action="/todo/new/<%= uid  %>" method="post">
-                                
+                        
+                    </div>
+                    <%- include("top",{sub:tadd.task,id:uid,cid:tadd._id}) %>
+                        <form class="addtask " action="/todo/new/<%= uid  %>" method="post">                                
                             <div class="input-button " >
                                 <a  class="add-todo" href="/new/<%= uid %>/<%=tadd._id %>"></a>
-                                <button class="butt" type="submit" name='id' value='<%=tadd._id %>'><i class="fa fa-plus add"></i></button>
+                                <button class="butt  inline" type="submit" name='id' value='<%=tadd._id %>'><i class="fa fa-plus add addtaskbut"></i></button>
                                 </a>     
                             </div>
                         </form>
-                    </div>
-                    <%- include("top",{sub:tadd.task,id:uid,cid:tadd._id}) %>
                 </div>
             </div>        
         <% }) %>
-        <div class="tc col-md-3 col-sm-1 t">
-            <form action="/todo/newcard" method="post" >
-                <input type="text" name="cname" >
-                <button type="submit" name="uid" value ='<%= uid %>'class="butt" ><i class="fa fa-plus add"></i></button>
+        <div class="tc col-md-3 col-sm-1 ">
+            <form action="/todo/newcard" method="post" class="newcf todolist" >
+                <input type="text" name="cname" placeholder=" Input card name here!" style=" border-style: dashed; " >
+                <button type="submit" name="uid" value ='<%= uid %>'class="butt" style="margin-left: 10px;" ><i class="fa fa-plus add"></i></button>
             </form>
         </div>
     

@@ -11,7 +11,8 @@ const User = require('./models/user'),
         passportLocalMongoose = require('passport-local-mongoose'),
         middleware = require("./middleware/mid"),
         todoRoutes = require("./routes/todoo"),
-        indexRoutes = require("./routes/userr")
+        indexRoutes = require("./routes/userr"),
+        methodOverride = require("method-override")
 
 app.set("view engine","ejs");
 app.use(express.static("public"));
@@ -31,6 +32,7 @@ app.use(function(req,res,next){
    
     next();
 });
+app.use(methodOverride("_method"));
 
 passport.use(new passportLocal(User.authenticate()));
 passport.serializeUser(User.serializeUser());

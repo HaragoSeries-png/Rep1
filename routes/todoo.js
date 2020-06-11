@@ -11,8 +11,7 @@ router.get("/:id",middleware.isLoggedIn,function(req,res){
         if(error){
             throw error
         }  
-        else{
-            
+        else{            
             Tada.find({_id:uid.card}).populate('task').exec(function(error,ta){
                 if(error){
                     throw error
@@ -21,14 +20,10 @@ router.get("/:id",middleware.isLoggedIn,function(req,res){
                     
                     let tn = ta                    
                     res.render("zone1",{tada:ta,id:req.params.id,user:uid.username})
-                }
-                
+                }               
             })
-        }
-        
-    })
-    
-    
+        }        
+    })    
 })
 
 
@@ -67,7 +62,7 @@ router.post("/newcard",middleware.isLoggedIn,function(req,res){
      
  })
  
-router.post("/del/:uid/:cid/:tid",middleware.isLoggedIn,function(req,res){
+router.delete("/del/:uid/:cid/:tid",middleware.isLoggedIn,function(req,res){
      let ttid = req.params.tid;
      let tcid = req.params.cid;
      let tuid = req.params.uid;
@@ -86,7 +81,7 @@ router.post("/del/:uid/:cid/:tid",middleware.isLoggedIn,function(req,res){
    
      res.redirect("/todo/"+tuid)
  })
-router.post("/delc/:uid/:cid",middleware.isLoggedIn,function(req,res){
+router.delete("/delc/:uid/:cid",middleware.isLoggedIn,function(req,res){
     let tuid = req.params.uid;
     let tcid = req.params.cid;
     
@@ -112,7 +107,7 @@ router.post("/:uid",middleware.isLoggedIn,function(req,res){
     let tdate = req.body.date
     let tdes = req.body.text
     let tprio = req.body.prio
-    let su = {tname:ttask,tdate:tdate,tdes:tdes,tprio:tprio }
+    let su = {tname:ttask,tdate:tdate,tdes:tdes,tprio:tprio,iscom:"notcom" }
     console.log("is id"+id)
     Task.create(su,function(err,result){
         console.log("reee"+result)
@@ -139,7 +134,7 @@ router.get("/show/:uid/:cid/:tid",middleware.isLoggedIn,function(req,res){
     })     
 })
 
-router.post("/edit/:id/:cid/:tid",middleware.isLoggedIn,function(req,res){
+router.put("/edit/:id/:cid/:tid",middleware.isLoggedIn,function(req,res){
     Task.findOneAndUpdate({_id:req.params.tid},
         {   
             $set:{
@@ -149,6 +144,19 @@ router.post("/edit/:id/:cid/:tid",middleware.isLoggedIn,function(req,res){
             }
         },function(err){
             res.redirect("/todo/"+req.params.id)
+        }
+        
+    )
+})
+router.put("/comp/:uid/:cid/:tid",function(req,res){
+    Task.findOneAndUpdate({_id:req.params.tid},
+        {   
+            $set:{
+                tiscom:req.body.iscom   
+            }
+        },function(err,tt){
+            console.log("rrrr"+tt)
+            res.redirect("/todo/"+req.params.uid)
         }
         
     )

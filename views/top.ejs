@@ -8,13 +8,9 @@
     margin-left: -8px;  
     width: 112px;
     height: 8px;
-}
-.box{
-    /* border-color: aliceblue;
-    border-style: solid;
-    border-width: 2px; */
     border-radius: 16px;
 }
+
 </style> 
         <div class ="notComp ">
             <h3>Todo</h3>
@@ -26,23 +22,23 @@
                                 <div>
                                     <div>
                                         <form class="innline" action="/todo/show/<%= id %>/<%= cid %>/<%= subb._id %>" method="get">
-                                            <button class="butt"><span class=""><%= subb.tname %> </span></button>                                        
+                                            <button class="butt"><span class="<%= subb.tiscom %>"><%= subb.tname %> </span></button>                                        
                                         </form>
                                         
                                         
-                                        <form class="inline" action="/todo/del/<%= id %>/<%= cid %>/<%= subb._id %>" method="POST">
+                                        <form class="inline" action="/todo/del/<%= id %>/<%= cid %>/<%= subb._id %>?_method=DELETE" method="POST">
                                         <button class="butt"><i class="fa fa-trash" role="button" inputmode="submit"></i></button>    
                                 
                                         </form> 
-                                        <form class="inline" action="/todo/show/<%= id %>/<%= cid %>/<%= subb._id %>" method="get">
+                                        <form class="inline" action="/todo/comp/<%= id %>/<%= cid %>/<%= subb._id %>?_method=PUT" method="post">
                                             
-                                            <button class="butt"><i class="fa fa-check" role="button"></i></button>
-                                                                                       
+                                            <button class="butt"><i class="fa fa-check" role="button" ></i></button>
+                                             <input type="hidden" name="iscom" value="com">                                          
                                         </form> 
                                     </div>
                                     
                                 </div>   
-                               <div class="box prio" style="background-color:<%= subb.tprio %>"></div>
+                               <div class="prio" style="background-color:<%= subb.tprio %>"></div>
                             </div>
                         
                         
