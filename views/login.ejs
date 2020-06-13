@@ -10,6 +10,18 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <%- include("partials/homestyle") %>
+        <style>
+            .logo img{
+                float:left;
+                width: 160px; 
+                margin-top:50px ;
+                     
+            }
+            .main{
+                max-width: 1500px;        
+                margin: auto;
+        }
+        </style>
     </head>
     <body>
         <%- include("partials/logstyle") %>
@@ -23,7 +35,7 @@
                     <p>Password</p>
                     <input type="password" name="password" placeholder="Enter Password">
                     <input type="submit" name="submit" value="Login">
-                    <a href="#">Forget Password</a>
+                    
 
 
                 </form>

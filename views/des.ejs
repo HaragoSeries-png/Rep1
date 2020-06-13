@@ -1,13 +1,16 @@
 <%- include("partials/header") %> 
 <%- include("partials/tod") %>
-
+<style>
+    
+    
+</style>
     
 
 <h1><%= user %> <a href="/logout">logout</a></h1>
 
-    <div class="row">  
+    <div class="grid-container">  
         <% tad.forEach(function(tadd){ %>
-            <div class="tc col-md-6 col-sm-12 col-xl-4" >            
+            <div class="tc " >            
                 <div class="todolist ">
                     <div class = "cover-img">
                         <div class="inline cardname"><%= tadd.name %></div>
@@ -30,7 +33,7 @@
                 </div>
             </div>        
         <% }) %>
-        <div class="tc col-md-3 col-sm-1 ">
+        <div class="tc">
             <form action="/todo/newcard" method="post" class="newcf todolist" >
                 <input type="text" name="cname" placeholder=" Input card name here!" style=" border-style: dashed; " >
                 <button type="submit" name="uid" value ='<%= uid %>'class="butt" style="margin-left: 10px;" ><i class="fa fa-plus add"></i></button>
@@ -38,6 +41,7 @@
         </div>
     
 </div>
+
     
     
 <%- include("partials/footer") %>

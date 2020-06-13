@@ -10,12 +10,56 @@ body{
     background: rgb(237, 187, 153 );
     
 }
+@media (min-width:400px ) {
+    .grid-container {
+        display: grid;
+        justify-content: space-evenly;
+        grid-template-columns: auto  ;
+        grid-gap: 10px;
+        background-color: #0db122;
+        padding: 10px;
+    }
+ 
+  
+}
+@media (min-width:900px ) {
+    .grid-container {
+        display: grid;
+        justify-content: space-evenly;
+        grid-template-columns: auto auto auto ;
+        grid-gap: 10px;
+        background-color: #661919;
+        padding: 10px;
+    }
+  
+    
+    
+}
+@media only screen and (min-width:1500px) {
+    .grid-container {
+        display: grid;
+        justify-content: space-evenly;
+        grid-template-columns: auto auto auto auto auto;
+        grid-gap: 10px;
+        background-color: #2196F3;
+        padding: 10px;
+    }
+    .grid-container > .todolist {
+        background-color: rgba(255, 255, 255, 0.8);
+        border: 1px solid black;
+        text-align: center;
+        font-size: 30px;
+    }
+   
+    
+}
+
 
 .todolist{
     
     position: static;
     left: 50px;    
-    width: 320px;    
+    width: 285px;    
     background: #ffffff;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(62,9,11,3);   
@@ -116,7 +160,7 @@ form.innline{
 
 .newcf{
     background-color:#ffffff;
-    width: 320px;
+    width: 280px;
     height: 60px;
     padding: 0px;
     border-radius: 16px;
@@ -125,7 +169,7 @@ form.innline{
 .newcf input[type="text"]{
      
      height: 40px;
-     width: 260px;
+     width: 210px;
      margin-top: 10px;
      margin-left: 10px;
 }
@@ -145,10 +189,11 @@ form.innline{
 }
 .addtaskbut{
     
-    width: 300px;
+    width: 240px;
     height: 50px;
     padding-top: 16px;
 }
+
 
 
 </style>

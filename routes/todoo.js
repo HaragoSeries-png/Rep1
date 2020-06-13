@@ -140,7 +140,8 @@ router.put("/edit/:id/:cid/:tid",middleware.isLoggedIn,function(req,res){
             $set:{
                 tname:req.body.name,
                 tdate:req.body.date,
-                tdes:req.body.des    
+                tdes:req.body.des, 
+                tiscom:"notcom"   
             }
         },function(err){
             res.redirect("/todo/"+req.params.id)
