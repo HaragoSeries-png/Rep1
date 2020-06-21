@@ -4,13 +4,14 @@ const path = require("path");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser")
 const User = require('./models/user'),
-        Tada = require("./models/tada"),
+        card = require("./models/card"),
         flash = require('connect-flash'),
         passport = require('passport'),
         passportLocal = require('passport-local'),
         passportLocalMongoose = require('passport-local-mongoose'),
         middleware = require("./middleware/mid"),
         todoRoutes = require("./routes/todoo"),
+        boardRoutes = require("./routes/board"),
         indexRoutes = require("./routes/userr"),
         methodOverride = require("method-override")
 
@@ -25,11 +26,11 @@ app.use(require('express-session')({
     saveUninitialized: false
 }));
 app.use(flash());
+// mongoose.set('useCreateIndex',true);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(function(req,res,next){
-    res.locals.currentUser = req.user;
-   
+    res.locals.currentUser = req.user;   
     next();
 });
 app.use(methodOverride("_method"));
@@ -41,24 +42,25 @@ passport.deserializeUser(User.deserializeUser());
 
 
     
-// Tada.create({
+// card.create({
 //         name :"min",
 //         sex:"male"
-//     },function(error,tada){
+//     },function(error,card){
 //         if(error){
 //             console.log('error');
 //         }
 //         else{
 //             console.log("added");
-//             console.log(tada);
+//             console.log(card);
 //         }
 // });
 app.use("/",indexRoutes);
+app.use("/board",boardRoutes);
 app.use("/todo",todoRoutes);
  
 
 app.get("/",function(req,res){
-    res.render("home",{sub:Tada.sub});
+    res.render("home",{sub:card.sub});
 })
 
 

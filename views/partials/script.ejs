@@ -1,0 +1,22 @@
+<head>
+
+</head>
+<script>
+    $(document).ready(function(e) {   
+        $("#test").on("click",function(event){
+            alert("fuck u")
+        })
+    });
+    var newScript = document.createElement('script');
+    newScript.type = 'text/javascript';
+    newScript.src = 'jquery-3.5.1.min.js'; // set the source of the script to your script
+    newScript.onload = function() {
+    alert("Script is ready!");
+    $(document).ready(function() {
+        alert("JQuery is ready!");
+    });
+    };
+    var head = document.getElementsByTagName("head")[0];
+    head.appendChild(newScript);
+    
+</script>

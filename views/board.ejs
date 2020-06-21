@@ -1,0 +1,261 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<style>
+    button.del-but{
+        margin: 0px 0px;
+        width: 30px;
+        height: 30px;
+        float: right;
+        font-size: 20px;
+        text-align: center;
+        background-color: transparent;
+        border-style: none;
+        cursor: pointer;
+    }
+    
+    .board{
+        width: 200px;
+        height: 100px;
+        background-color: rgb(248, 170, 106);
+        text-align: center;
+        margin-right: 40px;
+        border-radius: 10px;
+    }
+    .board:hover{
+        width: 200px;
+        height: 100px;
+        background-color: rgb(248, 134, 106);
+        text-align: center;
+        margin-right: 40px;
+        border-radius: 10px;
+    }
+    li{
+        float: left;
+        list-style: none;
+    }
+    button.open{
+        border-style: none;
+        margin-top: -35px;
+        float: left;
+        width: 200px;
+        height: 100px;
+        background-color: rgba(138, 226, 226, 0.3);
+        border-radius: 10px;
+        font-size: larger;
+    }
+    
+    button#new-board-but{
+        background-color: transparent;
+        border-radius: 100px;
+        border-style:solid ;
+        border-color: #000;
+    }
+    div.head{
+        font-size: 2rem;
+        margin-bottom: 24px;
+        height: 60px;
+        background-color: rgba(255, 204, 204, 0.575);
+    }
+    body{
+        margin: 0% ;
+
+    }
+    button.dropdown{
+        background-color: rgba(219, 171, 171, 0.616);
+        width: 150px;
+        height: 60px;
+        float: left;
+        margin: 0px;
+        border-style: none;
+        text-align: center;
+        transition: all 0.2s ease-in;
+        font-size: inherit;
+
+    }
+    .dropcontent li#profile{
+        display: block;
+        opacity: 0;
+        position: absolute;
+        pointer-events: none;
+        transition: all 100ms ease-in-out;
+        margin-left: 180px;
+    }
+    .dropcontent li#logout{
+        display: block;
+        margin-left: 300px;
+        opacity: 0;
+        position: absolute;
+        pointer-events: none;
+        transition: all 100ms ease-in-out;
+        
+    }
+    
+
+    #menu.show li#profile{
+        position:block ;
+        opacity: 1;
+        transform: translate(0px );
+        pointer-events:all;
+        margin-top: 10px;
+    }
+    #menu.show li#logout{
+        margin-top: 10px;
+        position:block ;
+        opacity: 1;
+        transform: translate(0px); 
+        pointer-events:all;       
+    }
+    #menu.show  button.dropdown{
+     
+        text-transform: none;
+         
+        pointer-events:all;      
+    }
+    li{
+        list-style: none;
+        float: left;
+        margin-left: 10px;
+        text-decoration: none;
+    }
+    a{
+        text-decoration: none;
+        color: #000;
+    }
+    button{
+        outline: none;
+    }
+    button.dropdown{
+        z-index: 2;
+        width: 200px;
+    }
+    .menu{       
+        width: 600px;
+        height: 60px;
+    }
+
+
+</style>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+    
+    $(document).ready(function(e) {   
+               
+        $(document).on("click","button#new-board-but",function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            var data ={
+                bname : $('form#new-board-but').children("input#boardname").val(),
+                uid   : $('form#new-board-but').children("button#new-board-but").val()
+            } 
+                $.ajax({
+                    type: 'POST',
+                    url: "/board/new",
+                    data: data,             // here I send the data when the button on the browser is clicked.
+                    
+                }).done(function( result ) {                    
+                    removetext("boardname")
+                    console.log( "Data Saved: " + result );
+                    creatb(result,data.bname)
+                }).fail(function(result){
+                    console.log("Fail! " +result.data);
+                });          
+        });
+        $(document).on("click","button.del-but",function(e) {
+            console.log("niii");
+            
+            e.preventDefault();
+            e.stopPropagation();
+            var data ={
+                bid : $(this).val(),
+                uid : $("input#us").val()                
+            } 
+                $.ajax({
+                    type: 'delete',
+                    url: "/board/"+data.bid,
+                    data: data,             // here I send the data when the button on the browser is clicked.
+                    
+                }).done(function( result ) {                    
+                    removetext("boardname")
+                    console.log( "Data Saved: " + result );
+                    dell(data.bid)
+                    
+                }).fail(function(result){
+                    console.log("Fail! " +result.data);
+                });          
+        });
+        $(document).on("click","li.board",function(event){
+            event.stopPropagation()
+            var data={
+                bid : $(this).children('input#bid').val()
+            }          
+            location.href="/todo/"+data.bid
+        })        
+    });
+    var removetext = function (input) {
+        var t= document.getElementById(input)
+        
+        t.value = " "
+    }
+    function dr(){
+        document.getElementById("menu").classList.toggle("show")
+    }
+    function dell(id){
+        var item = document.getElementById(id)
+        item.parentNode.removeChild(item);
+    };
+    function creatb(id,name){
+        var ne = document.getElementById('boa')
+        var nid = String(id)
+        nid = nid.substring(1,nid.length-1)
+        var child = document.createElement('li');      
+        child.classList.add("board")
+        child.setAttribute("id",nid)
+        child.innerHTML = '<input type="hidden" id="bid" value="'+ nid+'">  <form id="board-del"> <input type="hidden" value="<%= currentUser._id %>" id="us"> <button class="del-but" value="'+nid+'" name="bid"><i class="fa fa-times-circle-o" role="button"></i></button></form> '+name+'  ';
+        ne.appendChild(child);
+       
+    }
+    function c(){
+            alert("fukkkk")
+    }
+        
+    
+    
+</script>
+
+<div class="head" onclick="c()">
+    <div class ="menu" id="menu">
+        <button class="dropdown" onclick="dr()"><%= user.name %></button>
+        <ul id="option" class="dropcontent">
+            <li id="profile"><a href="/profile/<%= user._id %>">Profile</a></li> 
+            <li id="logout"><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+    
+</div>
+<div class="grid-container">  
+    <ul id="boa">
+        <% board.forEach(function(bo){ %>            
+            <li class="board" id="<%= bo._id %>" >
+                <input type="hidden" id="bid" value="<%= bo._id %>">
+                
+                <form id="board-del">
+                    <input type="hidden" value="<%= currentUser._id %>" id="us">
+                    <button class="del-but" value="<%= bo._id %>" name="bid"><i class="fa fa-times-circle-o" role="button"></i></button>
+                </form>
+           
+                    <%= bo.name %>                      
+            </li>       
+        <% }) %>
+    </ul>
+    
+    <div class="tc">
+        <form  class="newcf todolist" id="new-board-but" >
+            <input id="boardname" type="text" name="bname" placeholder=" Input card name here!" style=" border-style: dashed; " >
+            <button  name="qid" value ='<%= user._id %>'class="butt" id="new-board-but" style="margin-left: 10px;" ><i class="fa fa-plus add"></i></button>
+        </form>
+    </div>
+
+</div>
+

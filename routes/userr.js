@@ -1,6 +1,7 @@
 const express = require('express'),
         router = express.Router(),
         passport = require("passport"),
+        Board = require("../models/board"),
         User = require("../models/user"),
         middleware = require("../middleware/mid");
 
@@ -10,12 +11,17 @@ router.get("/signup",function(req,res){
 })
 
 router.post('/signup', function(req,res){
-    User.register(new User({username: req.body.username}), req.body.password, function(err, user){
+    User.register(new User({username: req.body.username,name:req.body.username,email:req.body.email}), req.body.password, function(err, user){
+        console.log("aaaaaaaaaaaaaaaaaaaa "+user);        
         if(err){
+            console.log("erree");
             console.log(err);
-            return res.render('signup');
+            return res.render('./signup');
         }
+        console.log("bbbbbbbbbbbbbbbb");
         passport.authenticate('local')(req,res,function(){
+            console.log("reg complete");
+            
             console.log(user._id)
             res.redirect('/login');
         });
@@ -39,17 +45,14 @@ router.post("/login",function(req,res,next){
     
 })},function(req, res){
     let tu = req.body.username
-    req.flash("login")
+    console.log("uuusername "+tu)
    
     
  
     User.find({username:tu},function(err,u){
-        
-       
+            console.log("uuu "+u[0]._id)
            
-            res.redirect("/todo/"+u[0]._id)
-       
-        
+            res.redirect("/board/"+u[0]._id)        
     }).limit(1)
 })
 
@@ -57,5 +60,25 @@ router.get("/logout",middleware.isLoggedIn,function(req,res){
     req.logout();
     res.redirect("/")
 })
+router.get("/profile/:uid",middleware.isLoggedIn,function(req,res){
+    res.render("./profile")
+})
+
+router.put("/edit/:uid",middleware.isLoggedIn,function(req,res){
+    
+    User.findOneAndUpdate({_id:req.params.uid},
+        {   
+            $set:{
+                name:req.body.name,
+                email:req.body.email                 
+            }
+        },function(err,re){
+                     
+            res.end()
+        }
+        
+    )
+})
+
 
 module.exports = router;

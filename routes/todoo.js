@@ -1,25 +1,26 @@
 const express = require('express'),
         router = express.Router();
-const   Tada = require("../models/tada"),
+const   Card = require("../models/card"),
         middleware = require("../middleware/mid"),
         Task = require("../models/task"),
-        User = require("../models/user");
+        Board = require("../models/board");
 
 router.get("/:id",middleware.isLoggedIn,function(req,res){
-   
-    User.findOne({_id:req.params.id},function(error,uid){ 
+    console.log("get todo");
+    
+    Board.findOne({_id:req.params.id},function(error,uid){ 
         if(error){
             throw error
         }  
         else{            
-            Tada.find({_id:uid.card}).populate('task').exec(function(error,ta){
+            Card.find({_id:uid.card}).populate('task').exec(function(error,ta){
                 if(error){
                     throw error
                 }
                 else{
-                    
-                    let tn = ta                    
-                    res.render("zone1",{tada:ta,id:req.params.id,user:uid.username})
+                   
+                    res.render("des",{tad:ta,bid:req.params.id,user:uid.username})
+                    res.end()
                 }               
             })
         }        
@@ -28,12 +29,13 @@ router.get("/:id",middleware.isLoggedIn,function(req,res){
 
 
 
-router.get("/new/:uid/:cid",middleware.isLoggedIn,function(req,res){
-
+router.get("/new/:bid/:cid",middleware.isLoggedIn,function(req,res){
+    console.log("new task")
+    let tbid = req.params.bid;
     let tcid = req.params.cid;
-    let tuid = req.params.uid;
+    console.log("bid = "+tbid+"cid = "+tcid)
 
-    res.render("addnew",{cid:tcid,uid:tuid});   
+    res.render("addnew",{cid:tcid,bid:tbid});   
 })
 
 router.post("/new/:uid",middleware.isLoggedIn,function(req,res){
@@ -45,20 +47,20 @@ router.post("/new/:uid",middleware.isLoggedIn,function(req,res){
 })
 router.post("/newcard",middleware.isLoggedIn,function(req,res){
     console.log("newcard")
-     let tname = req.body.cname;
-     let tuser = req.body.uid;
+    let tname = req.body.cname;
+    let tbid = req.body.bid;
      
-     Tada.create({name:tname},function(err,r){
+    Card.create({name:tname},function(err,r){
        
-         User.findOne({_id:tuser},function(err,tt){
-             let cid = r._id;
-        
-             tt.card.push(cid)
-             tt.save()
-   
-             res.redirect("/todo/"+tuser)
-         })
-     })
+        Board.findOne({_id:tbid},function(err,tt){
+            let cid = r._id;
+           
+            tt.card.push(cid)
+            tt.save()
+            var j = JSON.stringify(cid)
+            res.end(j)
+        })
+    })
      
  })
  
@@ -67,7 +69,7 @@ router.delete("/del/:uid/:cid/:tid",middleware.isLoggedIn,function(req,res){
      let tcid = req.params.cid;
      let tuid = req.params.uid;
      
-    Tada.findOne({_id:tcid},function(err,t){
+    Card.findOne({_id:tcid},function(err,t){
         
         t.task.pull({_id:ttid})
         t.save()
@@ -81,24 +83,25 @@ router.delete("/del/:uid/:cid/:tid",middleware.isLoggedIn,function(req,res){
    
      res.redirect("/todo/"+tuid)
  })
-router.delete("/delc/:uid/:cid",middleware.isLoggedIn,function(req,res){
-    let tuid = req.params.uid;
+router.delete("/delc/:cid",middleware.isLoggedIn,function(req,res){
+    let tbid = req.body.bid;
     let tcid = req.params.cid;
+    console.log("cid = "+tcid +"bid = "+tbid);
     
     
-    Tada.findOneAndDelete({"_id":tcid},function(err,task){
+    Card.findOneAndDelete({"_id":tcid},function(err,task){
 
 
 
     })    
-    User.findOne({_id:tuid},function(err,user){
+    Board.findOne({_id:tbid},function(err,user){
         
         user.card.pull({_id:tcid})
         user.save()
-
+        res.end()
     })
     
-    res.redirect("/todo/"+tuid)
+    // res.redirect("/todo/"+tuid)
 })
 router.post("/:uid",middleware.isLoggedIn,function(req,res){
     console.log("post new /:uid")
@@ -107,11 +110,11 @@ router.post("/:uid",middleware.isLoggedIn,function(req,res){
     let tdate = req.body.date
     let tdes = req.body.text
     let tprio = req.body.prio
-    let su = {tname:ttask,tdate:tdate,tdes:tdes,tprio:tprio,iscom:"notcom" }
+    let su = {tname:ttask,tdate:tdate,tdes:tdes,tprio:tprio,tiscom:"notcom" }
     console.log("is id"+id)
     Task.create(su,function(err,result){
         console.log("reee"+result)
-        Tada.findById(id,function(error,tad){
+        Card.findById(id,function(error,tad){
             
             tad.task.push(result._id)
             console.log(tad)        
@@ -141,7 +144,7 @@ router.put("/edit/:id/:cid/:tid",middleware.isLoggedIn,function(req,res){
                 tname:req.body.name,
                 tdate:req.body.date,
                 tdes:req.body.des, 
-                tiscom:"notcom"   
+                   
             }
         },function(err){
             res.redirect("/todo/"+req.params.id)
@@ -149,15 +152,16 @@ router.put("/edit/:id/:cid/:tid",middleware.isLoggedIn,function(req,res){
         
     )
 })
-router.put("/comp/:uid/:cid/:tid",function(req,res){
+router.put("/comp/:tid",function(req,res){
+    console.log("iscom"+req.body.iscom)
     Task.findOneAndUpdate({_id:req.params.tid},
         {   
             $set:{
                 tiscom:req.body.iscom   
             }
         },function(err,tt){
-            console.log("rrrr"+tt)
-            res.redirect("/todo/"+req.params.uid)
+            var co=JSON.stringify(req.body.iscom)
+            res.end(co)
         }
         
     )

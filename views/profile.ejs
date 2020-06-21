@@ -1,0 +1,68 @@
+<style>
+    body{
+        background-color: antiquewhite;
+    }
+    #name,#email{
+        font-size: 30px;
+    }
+    span#att{
+        font-size: 35px;
+        font-weight: bold;
+        margin-left: 40%;
+    }
+    input{
+        border-style: none;
+        background-color: transparent;
+    }
+    
+</style>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+    $(document).ready(function(e){
+        var uid = $("#uid").val()
+
+        $("#name,#email").change(function(event){
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            
+                var data ={
+                    name : $("#name").val(),
+                    email: $("#email").val()
+                }
+               
+                $.ajax({
+                    type:"put",
+                    url:"/edit/"+uid,
+                    data:data,
+                    
+                }).done(function(result){
+                    $("#name").val(data.name),
+                    $("#email").val(data.email)                     
+                }) 
+             
+        });
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+    })
+</script>
+
+<h1>Profile</h1>
+<form action="/board/<%= currentUser._id %>" method="get">
+    <button>back</button>
+</form>
+<!-- <div id="name"><span id="att">name</span> : <%= currentUser.name %></div> -->
+<form>
+    <input type="hidden" id="uid" value="<%= currentUser._id %>">
+    <span id="att">name :</span><input type="text" id="name" value="<%= currentUser.name %>" "> 
+
+</form>
+
+<!-- <div id="email"><span id="att">email</span> : <%= currentUser.email %></div> -->
+<form>
+    <span id="att">email :</span><input type="email" id="email" value="<%= currentUser.email %>">  
+</form>
+
+

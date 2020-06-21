@@ -1,12 +1,12 @@
 
 <%-include("partials/newtaskStyle")%>
 <div class="newTask_Box">
-    <form action="/todo/<%= uid %>" method="post">
+    <form action="/todo/<%= bid %>" method="post">
         <a href="#0" class="back">
             <i class="fa fa-arrow-left" aria-hidden="true"></i>
-         </a>
+        </a>
         <p>Task</p>
-        <input type="text" name="task" placeholder="Task Name">
+        <input type="text" name="task" placeholder="Task Name" required>
         <p>Date</p>
         <input type="date" name="date" >
         <p>Description</p>

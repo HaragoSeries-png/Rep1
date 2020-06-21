@@ -1,20 +1,131 @@
 <%- include("partials/header") %>
 <%- include("partials/tod") %>   
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+    
+    $(document).ready(function(e) {   
+               
+        $(document).off().on("click","form#com-but",function(e) {
+            console.log("nani")
+            e.preventDefault();
+            e.stopPropagation();
+
+            var data ={
+                tid : $(this).children("button#tid").val(),
+                iscom: $(this).children("input#icom").val()
+            } 
+            console.log("i get "+data.iscom)
+            if(data.iscom=="com"){
+                console.log("case 1");
+                
+                data.iscom="notcom"
+            }  
+            else if(data.iscom=="notcom"){
+                console.log("case 2");
+                data.iscom="com"
+            }
+                     
+                $.ajax({
+                    type: 'put',
+                    url: "/todo/comp/"+data.tid,
+                    data: data,             // here I send the data when the button on the browser is clicked.
+                    
+                }).done(function( result ) {    
+                    var nid = String(result)
+                    nid = nid.substring(1,nid.length-1)                
+                    console.log( "Data Saved: " + nid );
+                    var ii ="fa fa-undo" 
+                    if(nid!='com'){
+                        ii ="fa fa-check"
+                    }
+                    console.log("result "+nid)
+                    $("i#"+data.tid).parent().parent().children("input#icom").val(nid)
+                    console.log(ii)
+                   
+                    $("i#"+data.tid).removeClass()
+                    $("i#"+data.tid).addClass(ii)
+                    if(data.iscom=="com"){                             
+                        $("[name="+data.tid+"]").removeClass("notcom")
+                        $("[name="+data.tid+"]").addClass("com")                                          
+                    }  
+                    else if(data.iscom=="notcom"){
+                        $("[name="+data.tid+"]").removeClass("com")
+                        $("[name="+data.tid+"]").addClass("notcom")
+                    }
+
+                }).fail(function(result){
+                    console.log("Fail! " +result.data);
+                });          
+        });
+        
+        
+    });
+    
+
+    var removetext = function (input) {
+        var t= document.getElementById(input)
+        
+        t.value = " "
+    }
+    
+    
+</script>
 <style>
 .prio{  
     position: inherit;  
-    margin-top: 25px;
-    margin-bottom: -8px; 
-    margin-left: -8px;  
+    margin-top: 40px;
+  
+     
     width: 112px;
     height: 8px;
     border-radius: 16px;
 }
+ul.task-list{
+    overflow:hidden; 
+    overflow-y:scroll;
+    
+    width: 103.5%;
+    
+}
+#scroll::-webkit-scrollbar{
+    width: 6px;
+   
+}
+#scroll::-webkit-scrollbar-thumb{
+    background: rgba(148, 148, 148, 0.897);
+    border-radius: 1000px;
+}
+#scroll::-webkit-scrollbar-track{
+    margin-left: 100px;
+    background-color: #ffffff;
+}
+button.task-name{
+    width:200px;
+    height: 35px;
+    text-align: justify;
+    font-size: 30px;
+    
+}
+button.task-name:hover{
+    cursor:pointer;
+}
+button.task-name span{
+  
+    margin-left: 5px;
+    margin-top: 0px;
+}
+button.hidden{
+    pointer-events: none;
+}
+button{
+    outline: none;
+}
 
 </style> 
+
         <div class ="notComp ">
             <h3>Todo</h3>
-                <ul >
+                <ul id="scroll"class="task-list" >
                     <% sub.forEach(function(subb){ %>
 
                             <div class="task">
@@ -22,7 +133,7 @@
                                 <div>
                                     <div>
                                         <form class="innline" action="/todo/show/<%= id %>/<%= cid %>/<%= subb._id %>" method="get">
-                                            <button class="butt"><span class="<%= subb.tiscom %>"><%= subb.tname %> </span></button>                                        
+                                            <button class="butt task-name"><span name="<%= subb._id %>" class="<%= subb.tiscom %> tname"><%= subb.tname %> </span></button>                                        
                                         </form>
                                         
                                         
@@ -30,11 +141,21 @@
                                         <button class="butt"><i class="fa fa-trash" role="button" inputmode="submit"></i></button>    
                                 
                                         </form> 
-                                        <form class="inline" action="/todo/comp/<%= id %>/<%= cid %>/<%= subb._id %>?_method=PUT" method="post">
+                                       
+                                        <form class="inline" id="com-but" >                                      
+                                            <button class="butt " type="button" value="<%= subb._id %>"id="tid" >
+                                                <% if(subb.tiscom!="com") { %>
+                                                    <i id="<%= subb._id %>" value="<%= subb.tiscom %>" class="fa fa-check" ></i>
+                                                <% } else {%>
+                                                    <i id="<%= subb._id %>" value="<%= subb.tiscom %>" class="fa fa-undo" ></i>
+                                                <% } %>
+                                            </button>
                                             
-                                            <button class="butt"><i class="fa fa-check" role="button" ></i></button>
-                                             <input type="hidden" name="iscom" value="com">                                          
+                                            <input type="hidden" id="icom" value="<%= subb.tiscom %>">                                          
                                         </form> 
+                                        
+                                         
+                                        
                                     </div>
                                     
                                 </div>   
@@ -49,6 +170,3 @@
         </div>
     
 <%- include("partials/footer") %> 
-<script>
-   
-</script>

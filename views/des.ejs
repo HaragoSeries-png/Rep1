@@ -1,46 +1,146 @@
 <%- include("partials/header") %> 
 <%- include("partials/tod") %>
 <style>
-    
-    
+    li.tc{
+        float:left;
+        list-style:none;
+        margin-left: 30px;
+    }
 </style>
+
     
 
 <h1><%= user %> <a href="/logout">logout</a></h1>
+<form action="/board/<%= currentUser._id %>" method="get">
+    <button>back</button>
+</form>
 
-    <div class="grid-container">  
+
+    <div class="grid-container" >  
+        <ul id="card-list" class="grid-container">
         <% tad.forEach(function(tadd){ %>
-            <div class="tc " >            
+            <li class="tc" id="<%= tadd._id %>">            
                 <div class="todolist ">
                     <div class = "cover-img">
                         <div class="inline cardname"><%= tadd.name %></div>
-                            <form class="inline" action="/todo/delc/<%= id %>/<%= tadd._id %>?_method=DELETE" method="POST"></a>
-                                <button class="butt"><i class="fa fa-trash" role="button" inputmode="submit"></i></button>
-                                
-                            </form> 
+                        <form id="card-del inline">
+                            <input type="hidden" value="<%= bid %>" id="us">
+                            <button class="del-but" type="button" value="<%= tadd._id %>" name="cid"><i class="fa fa-times-circle-o" role="button"></i></button>
+                        </form> 
                         </div>
                     <div class="content">
                         
                     </div>
-                    <%- include("top",{sub:tadd.task,id:uid,cid:tadd._id}) %>
-                        <form class="addtask " action="/todo/new/<%= uid  %>" method="post">                                
+                    <%- include("top",{sub:tadd.task,id:bid,cid:tadd._id}) %>
+                        <form class="addtask " action="/todo/new" method="GET" >                                
                             <div class="input-button " >
-                                <a  class="add-todo" href="/new/<%= uid %>/<%=tadd._id %>"></a>
-                                <button class="butt  inline" type="submit" name='id' value='<%=tadd._id %>'><i class="fa fa-plus add addtaskbut"></i></button>
+                                <input type="hidden" value="<%= bid %>" id="us" name="bid">
+                                <button class="butt inline" type="button" name='cid'id="new-task-but" value='<%=tadd._id %>'><i class="fa fa-plus add addtaskbut"></i></button>
                                 </a>     
                             </div>
                         </form>
                 </div>
-            </div>        
+            </li>
+                    
         <% }) %>
-        <div class="tc">
-            <form action="/todo/newcard" method="post" class="newcf todolist" >
-                <input type="text" name="cname" placeholder=" Input card name here!" style=" border-style: dashed; " >
-                <button type="submit" name="uid" value ='<%= uid %>'class="butt" style="margin-left: 10px;" ><i class="fa fa-plus add"></i></button>
-            </form>
+            <li class="tc">
+                <form  id="new-card"  class="newcf todolist" >
+                    
+                    <input type="text"  placeholder=" Input card name here!" id="card-name" style=" border-style: dashed; " >
+                    <button type="button"  value ='<%= bid %>'class="butt" id="new-card-but" style="margin-left: 10px;" ><i class="fa fa-plus add"></i></button>
+                </form>
+            </li>
+        </ul>
+        
         </div>
     
-</div>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+window.onload=function(){
+
+   
+    
+    $(document).ready(function(e) {   
+          
+           
+        $(document).on("click","button#new-card-but",function(e) {
+            
+            e.preventDefault();
+            
+            var data ={
+                cname : $('form#new-card').children("input#card-name").val(),
+                bid   : $('form#new-card').children("button#new-card-but").val()
+            } 
+                $.ajax({
+                    type: 'POST',
+                    url: "/todo/newcard",
+                    data: data,             // here I send the data when the button on the browser is clicked.
+                    
+                }).done(function( result ) {                    
+                    console.log( "Data Saved: " + result );
+                    creatc(result,data.bid,data.cname)
+                }).fail(function(result){
+                    console.log("Fail! " +result.data);
+                });          
+        });
+        $(document).on("click","button.del-but",function(e) {
+            e.preventDefault();
+            
+            var data ={
+                cid : $(this).val(),
+                bid : $("input#us").val() ,
+              
+            } 
+                $.ajax({
+                    type: 'delete',
+                    url: "/todo/delc/"+data.cid,
+                    data: data,             // here I send the data when the button on the browser is clicked.
+                    
+                }).done(function( result ) {                    
+                  
+                    console.log( "Data Saved: " + result );
+                    dell(data.cid)
+                    
+                }).fail(function(result){
+                    console.log("Fail! " +result.data);
+                });          
+        });
+        $(document).on("click","button#new-task-but",function(e){
+            e.preventDefault();
+            var data ={
+                cid : $(this).val(),
+                bid : $("input#us").val() ,              
+            }
+            location.href="/todo/new/"+data.bid+'/'+data.cid
+        })
+       
+        function dell(id){
+            var item = document.getElementById(id)
+            
+            item.parentNode.removeChild(item);
+        };
+        function c(){
+            alert("fukkkk")
+        }
+        function creatc(id,bid,name){
+
+            var ne = document.getElementById("card-list")
+            var tadd = new Array()
+            var nid = String(id)
+            nid = nid.substring(1,nid.length-1)
+            var child = document.createElement('li');      
+            child.classList.add("tc")
+            child.setAttribute("id",nid)
+            child.innerHTML = '<div class="todolist "><div class = "cover-img"><div class="inline cardname">'+name+'</div><form id="card-del inline"><input type="hidden" value='+bid+' id="us"><button class="del-but" type="button" value='+id+' name="cid"><i class="fa fa-times-circle-o" role="button"></i></button></form></div><div class="content"></div><div class ="notComp "><h3>Todo</h3><ul id="scroll"class="task-list" > </ul></div><form class="addtask " ><div class="input-button " ><a  class="add-todo" href="/new/'+bid+'/'+id+'></a><button class="butt  inline"  name='+id+'id="new-task-but" value="'+id+'"><i class="fa fa-plus add addtaskbut"></i></button></a></div></form> </div> </div>';
+            $('.tc:last-of-type').before(child)          
+        }
+        
+    });
+}
+    
+    
+    
+</script>
 
     
     

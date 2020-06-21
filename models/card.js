@@ -1,7 +1,7 @@
 const   mongoose = require('mongoose'),
         passportLocalMongoose = require('passport-local-mongoose');
 
-let tadatable = new mongoose.Schema({
+let Cardtable = new mongoose.Schema({
     name:String,
     task:[
         {
@@ -11,4 +11,4 @@ let tadatable = new mongoose.Schema({
 
     ]
 })  
-module.exports = mongoose.model("Tada",tadatable);
+module.exports = mongoose.model("Card",Cardtable);
