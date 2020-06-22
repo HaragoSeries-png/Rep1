@@ -153,6 +153,7 @@
         width: 600px;
         height: 60px;
     }
+<<<<<<< HEAD
     input#boardname{
         height: 30px;
     }
@@ -196,6 +197,14 @@
     
 }
 
+=======
+    .tog{
+        opacity: 0;
+    }
+    li.board:hover .tog{
+        opacity: 1;
+    }
+>>>>>>> 9a17efcadf4fa0525418010ef57ffa1da4453eab
 
 
 </style>
@@ -254,7 +263,23 @@
                 bid : $(this).children('input#bid').val()
             }          
             location.href="/todo/"+data.bid
-        })        
+        })   
+        $(document).on("change","input#name",function(event){
+            event.stopPropagation()
+            
+            var data={
+                bid:$(this).siblings().val(),
+                name:$(this).val()
+            }
+            // alert("io "+data.name+" id "+data.bid)
+            $.ajax({
+                type:"put",
+                url:"/board/"+data.bid,
+                data:data
+            }).done(function(){
+                $(this).siblings("#name").val(data.name)
+            })
+        });     
     });
     var removetext = function (input) {
         var t= document.getElementById(input)
@@ -275,18 +300,23 @@
         var child = document.createElement('li');      
         child.classList.add("board")
         child.setAttribute("id",nid)
-        child.innerHTML = '<input type="hidden" id="bid" value="'+ nid+'">  <form id="board-del"> <input type="hidden" value="<%= currentUser._id %>" id="us"> <button class="del-but" value="'+nid+'" name="bid"><i class="fa fa-times-circle-o" role="button"></i></button></form> '+name+'  ';
+        child.innerHTML = '<input type="hidden" id="bid" value="'+ nid+'">  <form id="board-del" class="tog"> <input type="hidden" value="<%= currentUser._id %>" id="us"> <button class="del-but" value="'+nid+'" name="bid"><i class="fa fa-times-circle-o" role="button"></i></button></form><form id="board-name" ><input type="text" id="name" value= '+name+' onclick="event.stopPropagation()"  ><input class="esub" id="bid" type="hidden" value='+nid+'></input>';
         ne.appendChild(child);
        
     }
     function c(){
             alert("fukkkk")
     }
+    
         
     
     
 </script>
 
+<<<<<<< HEAD
+=======
+<div class="head">
+>>>>>>> 9a17efcadf4fa0525418010ef57ffa1da4453eab
     <div class ="menu" id="menu">
         <button class="dropdown" onclick="dr()"><%= user.name %></button>
         <ul id="option" class="dropcontent">
@@ -302,15 +332,18 @@
             <li class="board" id="<%= bo._id %>" >
                 <input type="hidden" id="bid" value="<%= bo._id %>">
                 
-                <form id="board-del">
+                <form id="board-del" class="tog">
                     <input type="hidden" value="<%= currentUser._id %>" id="us">
                     <button class="del-but" value="<%= bo._id %>" name="bid"><i class="fa fa-times-circle-o" role="button"></i></button>
                 </form>
-           
-                    <%= bo.name %>                      
+                <form id="board-name" >                    
+                    <input type="text" id="name" value="<%= bo.name %>" onclick="event.stopPropagation()"  >
+                    <input class="esub" id="bid" type="hidden" value="<%= bo._id %>"></input>  
+                </form>                             
             </li>       
         <% }) %>
     </ul>
+    
     
     <div class="tc">
         <form  class="newcf todolist" id="new-board-but" >
