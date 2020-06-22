@@ -120,6 +120,12 @@ button.hidden{
 button{
     outline: none;
 }
+form.tog{
+    opacity: 0;
+}
+.task:hover form.tog{
+    opacity: 1;
+}
 
 </style> 
 
@@ -137,13 +143,13 @@ button{
                                         </form>
                                         
                                         
-                                        <form class="inline" action="/todo/del/<%= id %>/<%= cid %>/<%= subb._id %>?_method=DELETE" method="POST">
+                                        <form class="inline tog" action="/todo/del/<%= id %>/<%= cid %>/<%= subb._id %>?_method=DELETE" method="POST">
                                         <button class="butt"><i class="fa fa-trash" role="button" inputmode="submit"></i></button>    
                                 
                                         </form> 
                                        
-                                        <form class="inline" id="com-but" >                                      
-                                            <button class="butt " type="button" value="<%= subb._id %>"id="tid" >
+                                        <form class="inline tog" id="com-but" >                                      
+                                            <button class="butt  " type="button" value="<%= subb._id %>"id="tid" >
                                                 <% if(subb.tiscom!="com") { %>
                                                     <i id="<%= subb._id %>" value="<%= subb.tiscom %>" class="fa fa-check" ></i>
                                                 <% } else {%>

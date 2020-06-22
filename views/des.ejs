@@ -131,7 +131,7 @@ window.onload=function(){
             var child = document.createElement('li');      
             child.classList.add("tc")
             child.setAttribute("id",nid)
-            child.innerHTML = '<div class="todolist "><div class = "cover-img"><div class="inline cardname">'+name+'</div><form id="card-del inline"><input type="hidden" value='+bid+' id="us"><button class="del-but" type="button" value='+id+' name="cid"><i class="fa fa-times-circle-o" role="button"></i></button></form></div><div class="content"></div><div class ="notComp "><h3>Todo</h3><ul id="scroll"class="task-list" > </ul></div><form class="addtask " ><div class="input-button " ><a  class="add-todo" href="/new/'+bid+'/'+id+'></a><button class="butt  inline"  name='+id+'id="new-task-but" value="'+id+'"><i class="fa fa-plus add addtaskbut"></i></button></a></div></form> </div> </div>';
+            child.innerHTML = '<div class="todolist "><div class = "cover-img"><div class="inline cardname">'+name+'</div><form id="card-del inline"><input type="hidden" value='+bid+' id="us"><button class="del-but" type="button" value='+id+' name="cid"><i class="fa fa-times-circle-o" role="button"></i></button></form></div><div class="content"></div><div class ="notComp "><h3>Todo</h3><ul id="scroll"class="task-list" > </ul></div><form class="addtask " ><div class="input-button " ><a  class="add-todo" href="/new/'+bid+'/'+id+'></a><button class="butt  inline"  name='+id+'id="new-task-but" value='+id+'><i class="fa fa-plus add addtaskbut"></i></button></a></div></form> </div> </div>';
             $('.tc:last-of-type').before(child)          
         }
         

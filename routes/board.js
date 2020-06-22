@@ -88,10 +88,21 @@ router.delete("/:bid",middleware.isLoggedIn,function(req,res){
             res.end()     
         })
         res.end() 
-    }) 
-    
-   
-     
+    })     
  })
+router.put("/:bid",middleware.isLoggedIn,function(req,res){
+    Board.findOneAndUpdate({_id:req.params.bid},
+        {   
+            $set:{
+                name:req.body.name,
+                                
+            }
+        },function(err,re){
+                     
+            res.end()
+        }
+        
+    )    
+})
 
 module.exports = router;

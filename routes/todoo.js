@@ -144,7 +144,7 @@ router.put("/edit/:id/:cid/:tid",middleware.isLoggedIn,function(req,res){
                 tname:req.body.name,
                 tdate:req.body.date,
                 tdes:req.body.des, 
-                   
+                tprio:req.body.prio    
             }
         },function(err){
             res.redirect("/todo/"+req.params.id)
