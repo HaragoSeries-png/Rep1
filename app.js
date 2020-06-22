@@ -34,7 +34,7 @@ app.use(function(req,res,next){
     next();
 });
 app.use(methodOverride("_method"));
-
+mongoose.set('useFindAndModify', false);
 passport.use(new passportLocal(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());

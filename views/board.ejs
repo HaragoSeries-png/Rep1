@@ -149,15 +149,11 @@
         z-index: 2;
         width: 200px;
     }
-    .menu{       
-        width: 600px;
-        height: 60px;
-    }
-<<<<<<< HEAD
+    
     input#boardname{
         height: 30px;
     }
-    @media (min-width:400px ) {
+    @media (min-width:300px ) {
     .grid-container {
         display: grid;
         justify-content: space-evenly;
@@ -165,9 +161,21 @@
         grid-gap: 10px;
         padding: 10px;
     }
- 
+    menu ul{
+        background-color: #D35400;
+    }
   
-}
+    }
+    @media (min-width:600px ) {
+        .grid-container {
+            display: grid;
+            justify-content: space-evenly;
+            grid-template-columns: auto auto  ;
+            grid-gap: 10px;
+            padding: 10px;
+        }
+        
+    }
     @media (min-width:1000px ) {
     .grid-container {
         display: grid;
@@ -176,35 +184,57 @@
         grid-gap: 10px;
         padding: 10px;
     }
-  
-    
-    
-}
-@media only screen and (min-width:1600px) {
-    .grid-container {
-        display: grid;
-        justify-content: space-evenly;
-        grid-template-columns: auto auto auto auto auto;
-        padding: 10px;
     }
-    .grid-container > .todolist {
-
-        border: 1px solid black;
-        text-align: center;
-        font-size: 30px;
+    @media only screen and (min-width:1200px) {
+        .grid-container {
+            display: grid;
+            justify-content: space-evenly;
+            grid-template-columns: auto auto auto auto  ;
+            padding: 10px;
+        }
+    
     }
+    
    
+    @media only screen and (min-width:1600px) {
+        .grid-container {
+            display: grid;
+            justify-content: space-evenly;
+            grid-template-columns: auto auto auto auto auto auto ;
+            padding: 10px;
+        }
     
-}
+    }
 
-=======
     .tog{
         opacity: 0;
     }
     li.board:hover .tog{
         opacity: 1;
     }
->>>>>>> 9a17efcadf4fa0525418010ef57ffa1da4453eab
+    input[type="text"]{
+        border:0 none ;
+        background-color: transparent; 
+        outline: none;
+        text-align: center;
+    }
+    input[type="text"]:hover{
+        border:1px  dashed ;
+        text-align: center;
+    }
+    .nb{
+        width: 200px;
+        height: 70px;
+        background-color:#EEEEEE ;
+        text-align: center;
+        margin-right: 40px;
+        border-radius: 10px;
+        font-size: 25px;
+        margin-top: 20px;
+        border:1px solid  rgb(245, 158, 150);
+        box-shadow: 0px 0px 16px rgb(245, 183, 177);
+    }
+
 
 
 </style>
@@ -220,7 +250,7 @@
             var data ={
                 bname : $('form#new-board-but').children("input#boardname").val(),
                 uid   : $('form#new-board-but').children("button#new-board-but").val()
-            } 
+            }             
                 $.ajax({
                     type: 'POST',
                     url: "/board/new",
@@ -300,8 +330,8 @@
         var child = document.createElement('li');      
         child.classList.add("board")
         child.setAttribute("id",nid)
-        child.innerHTML = '<input type="hidden" id="bid" value="'+ nid+'">  <form id="board-del" class="tog"> <input type="hidden" value="<%= currentUser._id %>" id="us"> <button class="del-but" value="'+nid+'" name="bid"><i class="fa fa-times-circle-o" role="button"></i></button></form><form id="board-name" ><input type="text" id="name" value= '+name+' onclick="event.stopPropagation()"  ><input class="esub" id="bid" type="hidden" value='+nid+'></input>';
-        ne.appendChild(child);
+        child.innerHTML = '<input type="hidden" id="bid" value="'+ nid+'">  <form id="board-del" class="tog"> <input type="hidden" value="<%= currentUser._id %>" id="us"> <button class="del-but" value="'+nid+'" name="bid"><i class="fa fa-times-circle-o" role="button"></i></button></form><form id="board-name" ><input type="text" id="name" value= " '+name+'" onclick="event.stopPropagation()"  ><input class="esub" id="bid" type="hidden" value='+nid+'></input>';
+        $('.tc:last-of-type').before(child);
        
     }
     function c(){
@@ -313,10 +343,7 @@
     
 </script>
 
-<<<<<<< HEAD
-=======
 <div class="head">
->>>>>>> 9a17efcadf4fa0525418010ef57ffa1da4453eab
     <div class ="menu" id="menu">
         <button class="dropdown" onclick="dr()"><%= user.name %></button>
         <ul id="option" class="dropcontent">
@@ -327,7 +354,7 @@
     
 </div>
 <div class="grid-container">  
-    <ul id="boa">
+    <ul id="boa" class="grid-container">
         <% board.forEach(function(bo){ %>            
             <li class="board" id="<%= bo._id %>" >
                 <input type="hidden" id="bid" value="<%= bo._id %>">
@@ -342,15 +369,18 @@
                 </form>                             
             </li>       
         <% }) %>
+        <li class="tc nb">
+            <div >
+                <form  class="newcf todolist" id="new-board-but" >
+                    <input id="boardname" type="text" name="bname" placeholder=" Input card name here!" required style=" border-style: dashed; " >
+                    <button  name="qid" value ='<%= user._id %>'class="butt" id="new-board-but" style="margin-left: 10px;" ><i class="fa fa-plus add"></i></button>
+                </form>
+            </div>
+        </li>
     </ul>
     
     
-    <div class="tc">
-        <form  class="newcf todolist" id="new-board-but" >
-            <input id="boardname" type="text" name="bname" placeholder=" Input card name here!" style=" border-style: dashed; " >
-            <button  name="qid" value ='<%= user._id %>'class="butt" id="new-board-but" style="margin-left: 10px;" ><i class="fa fa-plus add"></i></button>
-        </form>
-    </div>
+    
 
 </div>
 
