@@ -2,6 +2,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <style>
+    *{
+    margin: 0;
+    padding: 0;
+    font-family: 'Athiti', sans-serif;
+    box-sizing: border-box;
+    }
+
     button.del-but{
         margin: 0px 0px;
         width: 30px;
@@ -17,15 +24,20 @@
     .board{
         width: 200px;
         height: 100px;
-        background-color: rgb(248, 170, 106);
+        background-color:#EEEEEE ;
         text-align: center;
         margin-right: 40px;
         border-radius: 10px;
+        font-size: 25px;
+        margin-top: 20px;
+        border:1px solid  rgb(245, 158, 150);
+        box-shadow: 0px 0px 16px rgb(245, 183, 177);
     }
+
     .board:hover{
         width: 200px;
         height: 100px;
-        background-color: rgb(248, 134, 106);
+        background-color:#FDEDEC ;
         text-align: center;
         margin-right: 40px;
         border-radius: 10px;
@@ -55,22 +67,27 @@
         font-size: 2rem;
         margin-bottom: 24px;
         height: 60px;
-        background-color: rgba(255, 204, 204, 0.575);
+        
     }
     body{
         margin: 0% ;
-
+        background: rgb(246,204,199);
+        background: linear-gradient(0deg, rgba(246,204,199,1) 0%, rgba(255,234,234,1) 37%, rgba(178,235,242,1) 96%);
+        min-height: 100vh;
     }
+
     button.dropdown{
-        background-color: rgba(219, 171, 171, 0.616);
-        width: 150px;
-        height: 60px;
+        background-color:  #D35400 ;
+        width: 100px;
+        height: 40px;
         float: left;
-        margin: 0px;
+        margin: 10px;
         border-style: none;
         text-align: center;
         transition: all 0.2s ease-in;
-        font-size: inherit;
+        font-size: 20px;
+        border-radius: 10px;
+        text-transform: uppercase;
 
     }
     .dropcontent li#profile{
@@ -79,16 +96,19 @@
         position: absolute;
         pointer-events: none;
         transition: all 100ms ease-in-out;
-        margin-left: 180px;
+        margin-left: 250px;
+        font-size: 20px;
+        
+    
     }
     .dropcontent li#logout{
         display: block;
-        margin-left: 300px;
+        margin-left: 370px;
         opacity: 0;
         position: absolute;
         pointer-events: none;
         transition: all 100ms ease-in-out;
-        
+        font-size: 20px;
     }
     
 
@@ -108,7 +128,7 @@
     }
     #menu.show  button.dropdown{
      
-        text-transform: none;
+        
          
         pointer-events:all;      
     }
@@ -133,6 +153,49 @@
         width: 600px;
         height: 60px;
     }
+    input#boardname{
+        height: 30px;
+    }
+    @media (min-width:400px ) {
+    .grid-container {
+        display: grid;
+        justify-content: space-evenly;
+        grid-template-columns: auto ;
+        grid-gap: 10px;
+        padding: 10px;
+    }
+ 
+  
+}
+    @media (min-width:1000px ) {
+    .grid-container {
+        display: grid;
+        justify-content: space-evenly;
+        grid-template-columns: auto auto auto ;
+        grid-gap: 10px;
+        padding: 10px;
+    }
+  
+    
+    
+}
+@media only screen and (min-width:1600px) {
+    .grid-container {
+        display: grid;
+        justify-content: space-evenly;
+        grid-template-columns: auto auto auto auto auto;
+        padding: 10px;
+    }
+    .grid-container > .todolist {
+
+        border: 1px solid black;
+        text-align: center;
+        font-size: 30px;
+    }
+   
+    
+}
+
 
 
 </style>
@@ -224,7 +287,6 @@
     
 </script>
 
-<div class="head" onclick="c()">
     <div class ="menu" id="menu">
         <button class="dropdown" onclick="dr()"><%= user.name %></button>
         <ul id="option" class="dropcontent">
