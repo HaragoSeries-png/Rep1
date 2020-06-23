@@ -102,7 +102,7 @@ router.put("/invite",middleware.isLoggedIn,function(req,res){
                 u.board.push(bid)
                 u.save()
                 console.log("addd boo");
-                bo.eventNames.push({id:u._id,name:u.name})
+               
                 
                 res.redirect("/board/"+uid)              
             })

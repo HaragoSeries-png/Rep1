@@ -43,22 +43,25 @@ button.del-but{
     margin: 10px;
     cursor: pointer;
 }​
-{
-    
-}
+{}
+/* .grid-container {
+    display: grid;
+    justify-content: space-evenly;
+    grid-template-columns: auto auto auto auto  ;
+    grid-gap: 10px;    
+    padding: 10px;
+    background-color: #85C1E9;
+} */
 
 @media (min-width:400px ) {
     .grid-container {
         display: grid;
         justify-content: space-evenly;
         grid-template-columns: auto ;
-        grid-gap: 10px;
-    
+        grid-gap: 10px;   
         padding: 10px;
     }
-    
- 
-  
+      
 }
 @media (min-width:1000px ) {
     .grid-container {
@@ -75,9 +78,10 @@ button.del-but{
 }
 @media only screen and (min-width:1600px) {
     .grid-container {
+        width: 100%;
         display: grid;
         justify-content: space-evenly;
-        grid-template-columns: auto auto auto auto auto;
+        grid-template-columns: repeat(4,[col] 1fr);
         grid-gap: 10px;
       
         padding: 10px;
@@ -90,6 +94,18 @@ button.del-but{
     }
    
     
+} 
+.wrapper{
+    display: grid;
+    justify-content: space-evenly;
+    grid-template-columns: 80% 20%;
+    grid-gap: 10px;
+      
+    padding: 10px;
+}
+.chat{
+    float: right;
+    background-color: #85C1E9;
 }
 
 

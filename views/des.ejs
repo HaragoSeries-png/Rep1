@@ -24,8 +24,7 @@
         font-size: 30px;
         font-weight: bolder;
         border-style:none ;
-        outline-style:none;
-        
+        outline-style:none;        
     }
     
 </style>
@@ -38,7 +37,7 @@
 </form>
 
 
-    <div class="grid-container" >  
+    <div class="wrapper" >  
         <ul id="card-list" class="grid-container">
         <% tad.forEach(function(tadd){ %>
             <li class="tc" id="<%= tadd._id %>">            
@@ -75,20 +74,24 @@
                     <button type="button"  value ='<%= bid %>'class="butt" id="new-card-but" style="margin-left: 10px;" ><i class="fa fa-plus add"></i></button>
                 </form>
             </li>
+            
         </ul>
-        
+        <div class="chat">
+            <form action="/chat" method="post">
+                <input type="text" name="text">
+                <input type="hidden" name="bid" value="<%= bid %>">
+                <input type="hidden" name="uid" value="<%= currentUser._id %>">
+                <button type="submit"></button>
+            </form>
+            <% chats.forEach(function(chat){ %>
+                <div><%= chat.postby_id.name %></div>
+                <div><%= chat.content %></div>
+            <%}) %>
+        </div>
     </div>
-    <form action="/chat" method="post">
-        <input type="text" name="text">
-        <input type="hidden" name="bid" value="<%= bid %>">
-        <input type="hidden" name="uid" value="<%= currentUser._id %>">
-        <button type="submit"></button>
-    </form>
-    <% chats.forEach(function(chat){ %>
-        <div><%= chat.postby_id.name %></div>
-        <div><%= chat.content %></div>
-    <%}) %>
     
+        
+   
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
 window.onload=function(){
