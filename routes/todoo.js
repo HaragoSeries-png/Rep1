@@ -4,25 +4,31 @@ const   Card = require("../models/card"),
         middleware = require("../middleware/mid"),
         Task = require("../models/task"),
         Board = require("../models/board");
+const Chat = require('../models/chat');
 
 router.get("/:id",middleware.isLoggedIn,function(req,res){
     console.log("get todo");
     
-    Board.findOne({_id:req.params.id},function(error,uid){ 
+    Board.findOne({_id:req.params.id}).populate('chat').exec(function(error,b){ 
         if(error){
             throw error
         }  
-        else{            
-            Card.find({_id:uid.card}).populate('task').exec(function(error,ta){
-                if(error){
-                    throw error
-                }
-                else{
-                   
-                    res.render("des",{tad:ta,bid:req.params.id,user:uid.username})
-                    res.end()
-                }               
-            })
+        else{  
+            console.log("bbb"+b.chat[0]._id);            
+            Chat.find({_id:b.chat}).populate('postby_id').exec(function(err,ch){
+                console.log("chat "+ch)
+                Card.find({_id:b.card}).populate('task').exec(function(error,ta){
+                    if(error){
+                        throw error
+                    }
+                    else{
+                        
+                        res.render("des",{tad:ta,bid:req.params.id,user:b.username,team:b.team,chats:ch})
+                        res.end()
+                    }               
+                })
+            }) 
+            
         }        
     })    
 })

@@ -11,6 +11,7 @@ const User = require('./models/user'),
         passportLocalMongoose = require('passport-local-mongoose'),
         middleware = require("./middleware/mid"),
         todoRoutes = require("./routes/todoo"),
+        chatRoutes = require("./routes/chatt"),
         boardRoutes = require("./routes/board"),
         indexRoutes = require("./routes/userr"),
         methodOverride = require("method-override")
@@ -57,6 +58,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use("/",indexRoutes);
 app.use("/board",boardRoutes);
 app.use("/todo",todoRoutes);
+app.use("/chat",chatRoutes);
  
 
 app.get("/",function(req,res){

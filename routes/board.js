@@ -15,7 +15,7 @@ router.get("/:id",middleware.isLoggedIn,function(req,res){
         }  
         else{    
             console.log('boarddd '+uid.board)        
-            Board.find({_id:uid.board}).populate('card').exec(function(error,bo){
+            Board.find({_id:uid.board}).populate('card','team').exec(function(error,bo){
                 if(error){
                     throw error
                 }

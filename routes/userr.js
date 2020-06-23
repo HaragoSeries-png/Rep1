@@ -1,3 +1,5 @@
+const board = require('../models/board');
+
 const express = require('express'),
         router = express.Router(),
         passport = require("passport"),
@@ -96,13 +98,11 @@ router.put("/invite",middleware.isLoggedIn,function(req,res){
             return res.redirect("back")
         }
         else{
-            User.findOne({_id:uid},function(err,u){                
-                
-
-                    
+            User.findOne({_id:uid},function(err,u){                                    
                 u.board.push(bid)
                 u.save()
                 console.log("addd boo");
+                bo.eventNames.push({id:u._id,name:u.name})
                 
                 res.redirect("/board/"+uid)              
             })

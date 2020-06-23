@@ -7,6 +7,22 @@ let BoardSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
     },
+    team:[
+        {        
+            id:{ 
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"User"
+            },
+            name:String
+        }
+    ],
+    chat:[
+        {        
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"Chat"      
+        }
+    ],
+    
     card:[{
             type:mongoose.Schema.Types.ObjectId,
             ref:"Card"
