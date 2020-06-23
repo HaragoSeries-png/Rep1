@@ -32,9 +32,11 @@
         margin-top: 20px;
         border:1px solid  rgb(245, 158, 150);
         box-shadow: 0px 0px 16px rgb(245, 183, 177);
+        transition: all 100ms ease-in-out;
     }
 
     .board:hover{
+        transform: scale(1.12);
         width: 200px;
         height: 100px;
         background-color:#FDEDEC ;
@@ -110,6 +112,19 @@
         transition: all 100ms ease-in-out;
         font-size: 20px;
     }
+    .dropcontent li#add-b{
+        display: block;
+        margin-left: 480px;
+        opacity: 0;
+        position: absolute;
+        pointer-events: none;
+        transition: all 100ms ease-in-out;
+        font-size: 20px;
+        cursor: pointer;
+    }
+    #add-b{
+        cursor: pointer;
+    }
     
 
     #menu.show li#profile{
@@ -126,10 +141,15 @@
         transform: translate(0px); 
         pointer-events:all;       
     }
-    #menu.show  button.dropdown{
-     
+    #menu.show li#add-b{
+        position:block ;
+        opacity: 1;
+        transform: translate(0px);
+        pointer-events:all;
+        margin-top: 10px;
         
-         
+    }
+    #menu.show  button.dropdown{    
         pointer-events:all;      
     }
     li{
@@ -212,6 +232,9 @@
     li.board:hover .tog{
         opacity: 1;
     }
+    li.board:hover .inf{
+        opacity: 1;
+    }
     input[type="text"]{
         border:0 none ;
         background-color: transparent; 
@@ -234,7 +257,60 @@
         border:1px solid  rgb(245, 158, 150);
         box-shadow: 0px 0px 16px rgb(245, 183, 177);
     }
+#popuptext{
+    display: none;
+    opacity: 0;
+    margin-left: 15%;
+    text-align: center;
+    transition: all 0.1s ease-in-out ;
+    padding: 30px 70px; 
+    border-radius: 30px;
+   
+}
+#popuptext.pp{
+    display: inline;
+    opacity: 1;
+    transition: all 0.1s ease-in-out ;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 2rem;
+    background-color:rgba(252, 188, 215, 0.555);
+    padding: 30px 70px;
+   
+}
+i.inf{
+    float: right;
+    opacity: 0;
+    margin-top: 5px;
+    margin-right: 5px;
+    font-size: 20px;
+}
 
+i:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+    transition: all 0.2s ease-out;
+}
+i.inf .tooltiptext {
+  opacity: 0;
+  width: 80px;
+  margin-top: -10px;
+  background-color:rgba(172, 56, 43, 0.514);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 2px 0;
+  font-size: 12px;  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+i.inf:hover .tooltiptext {
+  opacity: 1;
+  /* transform: scale(1.05); */
+    transition: all 0.2s ease-in-out;
+}
 
 
 </style>
@@ -309,7 +385,19 @@
             }).done(function(){
                 $(this).siblings("#name").val(data.name)
             })
-        });     
+        });
+        $(document).on("click",".popup",function(event){
+            
+            event.stopPropagation()
+            var pop =$(this).children(".popup").val()
+            // alert(pop)  
+            
+            var popup = document.getElementById("popuptext");
+            popup.innerHTML=pop
+            popup.classList.toggle("pp");
+            document.getElementById("menu").classList.remove("show")
+        })  
+
     });
     var removetext = function (input) {
         var t= document.getElementById(input)
@@ -318,6 +406,9 @@
     }
     function dr(){
         document.getElementById("menu").classList.toggle("show")
+        var popup = document.getElementById("popuptext");
+           
+        popup.classList.remove("pp");
     }
     function dell(id){
         var item = document.getElementById(id)
@@ -330,14 +421,14 @@
         var child = document.createElement('li');      
         child.classList.add("board")
         child.setAttribute("id",nid)
-        child.innerHTML = '<input type="hidden" id="bid" value="'+ nid+'">  <form id="board-del" class="tog"> <input type="hidden" value="<%= currentUser._id %>" id="us"> <button class="del-but" value="'+nid+'" name="bid"><i class="fa fa-times-circle-o" role="button"></i></button></form><form id="board-name" ><input type="text" id="name" value= " '+name+'" onclick="event.stopPropagation()"  ><input class="esub" id="bid" type="hidden" value='+nid+'></input>';
+        child.innerHTML = '<input type="hidden" id="bid" value="'+ nid+'">  <form id="board-del" class="tog"> <input type="hidden" value="<%= currentUser._id %>" id="us"> <button class="del-but" value="'+nid+'" name="bid"><i class="fa fa-times-circle-o" role="button"></i></button></form><i class="fa fa-info popup inf " aria-hidden="true"><span class="tooltiptext">show board id</span><input class="popup" type="hidden" value='+id+'></input></i><form id="board-name" ><input type="text" id="name" value= " '+name+'" onclick="event.stopPropagation()"  ><input class="esub" id="bid" type="hidden" value='+nid+'></input>';
         $('.tc:last-of-type').before(child);
        
     }
     function c(){
-            alert("fukkkk")
+        alert("fukkkk")
     }
-    
+   
         
     
     
@@ -349,24 +440,30 @@
         <ul id="option" class="dropcontent">
             <li id="profile"><a href="/profile/<%= user._id %>">Profile</a></li> 
             <li id="logout"><a href="/logout">Logout</a></li>
+            <li id="add-b" ><a href="/invite">Add-board</a></li>
         </ul>
     </div>
-    
-</div>
+   <span id="popuptext" class="p">hee</span>
+
+</div> 
+
 <div class="grid-container">  
     <ul id="boa" class="grid-container">
         <% board.forEach(function(bo){ %>            
             <li class="board" id="<%= bo._id %>" >
                 <input type="hidden" id="bid" value="<%= bo._id %>">
                 
-                <form id="board-del" class="tog">
-                    <input type="hidden" value="<%= currentUser._id %>" id="us">
-                    <button class="del-but" value="<%= bo._id %>" name="bid"><i class="fa fa-times-circle-o" role="button"></i></button>
-                </form>
+                    
+                    <form id="board-del" class="tog">
+                        <input type="hidden" value="<%= currentUser._id %>" id="us">
+                        <button class="del-but" value="<%= bo._id %>" name="bid"><i class="fa fa-times-circle-o" role="button"></i></button>
+                    </form>
+                    <i class="fa fa-info popup inf " aria-hidden="true"><span class="tooltiptext">show board id</span><input class="popup" type="hidden" value="<%= bo._id %>"></input></i>
                 <form id="board-name" >                    
                     <input type="text" id="name" value="<%= bo.name %>" onclick="event.stopPropagation()"  >
                     <input class="esub" id="bid" type="hidden" value="<%= bo._id %>"></input>  
-                </form>                             
+                </form>    
+                                             
             </li>       
         <% }) %>
         <li class="tc nb">

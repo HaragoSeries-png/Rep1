@@ -1,0 +1,38 @@
+<style>
+    body{
+        background: linear-gradient(0deg, rgba(246,204,199,1) 0%, rgba(255,234,234,1) 37%, rgba(178,235,242,1) 96%);
+    }
+    form.new{
+        margin-top: 220px;
+        background-color: rgba(75, 75, 75, 0.452);
+        
+        width: 350px;
+        padding: 30px;
+    }
+    input[type="text"]{
+        height: 30px;
+        width: 250px;
+        font-size: 25px;
+    }
+    button{
+        border: none;
+        outline: none;
+        height: 40px;
+        background:  #AED6F1;
+        color: #ffffff;
+        font-size: 18px;
+        border-radius: 20px;
+    }
+</style>
+<form action="/board/<%= currentUser._id %>" method="get" class="backbut">
+    <button style="background-color:#f1d6ae; color: #000000;">back</button>
+</form>
+<center>
+    
+    <form class="new" action="/invite?_method=put" method="post">
+        <div>Add new board by id</div>
+        <input type="hidden" name="uid" value="<%= currentUser._id %>">
+        <input type="text" name="bid" placeholder="Place board id here">
+        <button type="submit" >Add</button>
+    </form>
+</center>

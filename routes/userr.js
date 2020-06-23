@@ -79,6 +79,40 @@ router.put("/edit/:uid",middleware.isLoggedIn,function(req,res){
         
     )
 })
+router.put("/invite",middleware.isLoggedIn,function(req,res){
+    
+    var uid= req.body.uid,
+        bid =req.body.bid;
+    console.log("uid "+uid+" bid "+bid)
+    Board.findById(bid,function(err,bo){
+        console.log("found = "+bo)
+        if(!bo){
+            console.log("wrong");
+            
+            return res.redirect("back")
+        }
+        else if(bo.owner==uid){
+            console.log("arlldlasdas")
+            return res.redirect("back")
+        }
+        else{
+            User.findOne({_id:uid},function(err,u){                
+                
+
+                    
+                u.board.push(bid)
+                u.save()
+                console.log("addd boo");
+                
+                res.redirect("/board/"+uid)              
+            })
+        }
+    })
+    
+})
+router.get("/invite/",middleware.isLoggedIn,function(req,res){
+    res.render("add-board")
+})
 
 
 module.exports = router;

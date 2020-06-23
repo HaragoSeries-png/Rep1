@@ -152,6 +152,22 @@ router.put("/edit/:id/:cid/:tid",middleware.isLoggedIn,function(req,res){
         
     )
 })
+router.put("/:cid",middleware.isLoggedIn,function(req,res){
+
+    Card.findOneAndUpdate({_id:req.params.cid},
+        {   
+            $set:{
+                name:req.body.name,
+                                
+            }
+        },function(err,re){
+            console.log("change to "+re);
+                     
+            res.end()
+        }
+        
+    )
+})
 router.put("/comp/:tid",function(req,res){
     console.log("iscom"+req.body.iscom)
     Task.findOneAndUpdate({_id:req.params.tid},

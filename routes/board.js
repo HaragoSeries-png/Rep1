@@ -41,8 +41,8 @@ router.post("/new",middleware.isLoggedIn,function(req,res){
     // console.log("bname "+bname+" id "+tuid);
     
      
-    Board.create({name:bname},function(err,r){
-         console.log('bo '+r);
+    Board.create({name:bname,owner:tuid},function(err,r){
+        console.log('bo '+r);
         if(err){
             console.log(err)
         }
@@ -65,30 +65,42 @@ router.post("/new",middleware.isLoggedIn,function(req,res){
  })
  
 router.delete("/:bid",middleware.isLoggedIn,function(req,res){
-     let tbid = req.params.bid;
-     let tuid = req.body.uid;
-     console.log("del bid = "+tbid+" uid = "+tuid)
+    let tbid = req.params.bid;
+    let tuid = req.body.uid;
+    console.log("del bid = "+tbid+" uid = "+tuid)
+    
      
     User.findOne({_id:tuid},function(err,u){
         
         u.board.pull({_id:tbid})
         u.save()
-    })
-    Board.findOneAndDelete({_id:tbid},function(err,board){
-        (board.card).forEach(tcid => {
-            Card.findOneAndDelete({_id:tcid},function(err,card){
-                (card.task).forEach(ttid => {
-                    Task.findOneAndDelete({_id:ttid},function(err,task){
-                        res.end()
+        Board.findById(tbid,function(err,bo){
+            console.log("found = "+bo)
+           
+            if(bo.owner==tuid){
+                Board.findOneAndDelete({_id:tbid},function(err,board){
+                    (board.card).forEach(tcid => {
+                        Card.findOneAndDelete({_id:tcid},function(err,card){
+                            (card.task).forEach(ttid => {
+                                Task.findOneAndDelete({_id:ttid},function(err,task){
+                                    res.end()
+                                })
+                                res.end()
+                            })
+                            res.end()
+                        });   
+                        res.end()     
                     })
-                    res.end()
-                })
+                    res.end() 
+                })   
+            }
+            else{
                 res.end()
-            });   
-            res.end()     
+            }
         })
-        res.end() 
-    })     
+    })
+
+      
  })
 router.put("/:bid",middleware.isLoggedIn,function(req,res){
     Board.findOneAndUpdate({_id:req.params.bid},
@@ -104,5 +116,6 @@ router.put("/:bid",middleware.isLoggedIn,function(req,res){
         
     )    
 })
+
 
 module.exports = router;

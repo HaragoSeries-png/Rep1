@@ -6,6 +6,28 @@
         list-style:none;
         margin-left: 30px;
     }
+    .ninline{
+        display: inline;
+        height: 80px;
+    }
+    div.cover-img{
+        display: inline;
+    }
+    i.fa-times-circle-o{
+        font-size: 30px;
+        margin-top: -20px;
+    }
+   
+    input#name{
+        width: 200px;
+        height: 40px;
+        font-size: 30px;
+        font-weight: bolder;
+        border-style:none ;
+        outline-style:none;
+        
+    }
+    
 </style>
 
     
@@ -22,8 +44,11 @@
             <li class="tc" id="<%= tadd._id %>">            
                 <div class="todolist ">
                     <div class = "cover-img">
-                        <div class="inline cardname"><%= tadd.name %></div>
-                        <form id="card-del inline">
+                        <form id="card-name" class="ninline" >                    
+                            <input type="text" id="name" value="<%= tadd.name %>" autocomplete="off" onclick="event.stopPropagation()"  >
+                            <input class="esub" id="cid" type="hidden" value="<%= tadd._id %>"></input>  
+                        </form>  
+                        <form id="card-del inline" class="inline card-del">
                             <input type="hidden" value="<%= bid %>" id="us">
                             <button class="del-but" type="button" value="<%= tadd._id %>" name="cid"><i class="fa fa-times-circle-o" role="button"></i></button>
                         </form> 
@@ -103,7 +128,9 @@ window.onload=function(){
                     
                 }).fail(function(result){
                     console.log("Fail! " +result.data);
-                });          
+                }); 
+                
+                         
         });
         $(document).on("click","button#new-task-but",function(e){
             e.preventDefault();
@@ -113,6 +140,23 @@ window.onload=function(){
             }
             location.href="/todo/new/"+data.bid+'/'+data.cid
         })
+        $(document).on("change","input#name",function(event){
+                 
+                    event.stopPropagation()
+                    
+                    var data={
+                        cid:$(this).siblings().val(),
+                        name:$(this).val()
+                    }
+                   
+                    $.ajax({
+                        type:"put",
+                        url:"/todo/"+data.cid,
+                        data:data
+                    }).done(function(){
+                        $(this).siblings("#name").val(data.name)
+                    })
+                }); 
        
         function dell(id){
             var item = document.getElementById(id)
@@ -131,7 +175,7 @@ window.onload=function(){
             var child = document.createElement('li');      
             child.classList.add("tc")
             child.setAttribute("id",nid)
-            child.innerHTML = '<div class="todolist "><div class = "cover-img"><div class="inline cardname">'+name+'</div><form id="card-del inline"><input type="hidden" value='+bid+' id="us"><button class="del-but" type="button" value='+id+' name="cid"><i class="fa fa-times-circle-o" role="button"></i></button></form></div><div class="content"></div><div class ="notComp "><h3>Todo</h3><ul id="scroll"class="task-list" > </ul></div><form class="addtask " ><div class="input-button " ><a  class="add-todo" href="/new/'+bid+'/'+id+'></a><button class="butt  inline"  name='+id+'id="new-task-but" value='+id+'><i class="fa fa-plus add addtaskbut"></i></button></a></div></form> </div> </div>';
+            child.innerHTML = '<div class="todolist "><div class = "cover-img"><form id="card-name" class="ninline" ><input type="text" id="name" value=  "'+name+'" autocomplete="off" onclick="event.stopPropagation()" ><input class="esub" id="cid" type="hidden" value='+id+'></input></form>   <form id="card-del inline" class="inline card-del"><input type="hidden" value='+bid+' id="us"><button class="del-but" type="button" value='+id+' name="cid"><i class="fa fa-times-circle-o" role="button"></i></button></form></div><div class="content"></div><div class ="notComp "><h3>Todo</h3><ul id="scroll"class="task-list" > </ul></div><form class="addtask " ><div class="input-button " ><a  class="add-todo" href="/new/'+bid+'/'+id+'></a><button class="butt  inline"  name='+id+'id="new-task-but" value='+id+'><i class="fa fa-plus add addtaskbut"></i></button></a></div></form> </div> </div>';
             $('.tc:last-of-type').before(child)          
         }
         
