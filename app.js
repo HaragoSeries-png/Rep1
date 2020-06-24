@@ -16,6 +16,7 @@ const User = require('./models/user'),
         indexRoutes = require("./routes/userr"),
         methodOverride = require("method-override")
 const port = process.env.PORT||3000;
+const URI = "mongodb+srv://chanon:132231@cluster0-broqy.mongodb.net/test?retryWrites=true&w=majority"
 app.set("view engine","ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
