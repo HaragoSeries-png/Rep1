@@ -60,6 +60,8 @@ router.post("/login",function(req,res,next){
 
 router.get("/logout",middleware.isLoggedIn,function(req,res){
     req.logout();
+    
+   
     res.redirect("/")
 })
 router.get("/profile/:uid",middleware.isLoggedIn,function(req,res){

@@ -53,8 +53,9 @@ ul li a:hover{
 
 .title{
     position: absolute;
-    top: 50%;
-    left: 33%;
+    margin-left:30vw;
+    margin-top: 40vh;
+    float: left;
     
 }
 
@@ -127,18 +128,51 @@ ul li a:hover{
     display: none;
 }
 @media (max-width: 320px){
-    
+    .title{
+        margin-left: -10px ;   
+        text-align: left;     
+    }
+    .title h1{
+        transform: scale(0.8);
+        
+        text-align: left;
+    }
+    ul{
+        margin-left:280 ;
+        z-index: 1;
+    }  
+   
 }
 @media (max-width: 600px){
+    .title{
+        margin-left: 50px;
+        transform: translateX(-30vw);
+        transition: all 0.2s ease-in-out;
+    }
     .title h1{
-        margin-left: 10%;
+        transform: scale(0.8);
+        text-align: left;
+    }
+    ul{
+        margin-top: 22px;
+        float: right;
+        margin-left: auto;
+        z-index: 1;
+    } 
+    .img-Box{
+        display: none;
     }
 }
 @media (max-width: 900px){
+    .title{
+        transform: translateX(-16vw);
+        transition: all 0.2s ease-in-out;
+    }
     .checkb{
         display: block;
     } 
     ul{
+        margin-top: 22px;
         position: absolute;
         right: 0px;
         height: 100vh;

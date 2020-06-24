@@ -15,7 +15,7 @@ const User = require('./models/user'),
         boardRoutes = require("./routes/board"),
         indexRoutes = require("./routes/userr"),
         methodOverride = require("method-override")
-
+const port = process.env.PORT||3000;
 app.set("view engine","ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
@@ -31,7 +31,9 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(function(req,res,next){
-    res.locals.currentUser = req.user;   
+    res.locals.currentUser = req.user;  
+    res.locals.error = req.flash('error');
+    res.locals.success = req.flash('success');
     next();
 });
 app.use(methodOverride("_method"));
@@ -70,6 +72,6 @@ app.get("/",function(req,res){
 
 
 
-app.listen(3000, function(req,res){
+app.listen(port, function(req,res){
     console.log("welcome to the Laboratory")
 }) 
