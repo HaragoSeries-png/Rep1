@@ -18,6 +18,7 @@ router.post('/signup', function(req,res){
         if(err){
             console.log("erree");
             console.log(err);
+           
             return res.render('./signup');
         }
         console.log("bbbbbbbbbbbbbbbb");
