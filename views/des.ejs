@@ -14,8 +14,14 @@
         display: inline;
     }
     i.fa-times-circle-o{
+        display: none;
         font-size: 30px;
         margin-top: -20px;
+        margin-right: -10px;
+    }
+    .tc:hover i.fa-times-circle-o{
+        display:inline-block;
+        
     }
    
     input#name{
@@ -77,16 +83,18 @@
             
         </ul>
         <div class="chat">
-            <form action="/chat" method="post">
+            <form action="/chat" method="post" class="chatin">
                 <input type="text" name="text">
                 <input type="hidden" name="bid" value="<%= bid %>">
                 <input type="hidden" name="uid" value="<%= currentUser._id %>">
                 <button type="submit"></button>
             </form>
-            <% chats.forEach(function(chat){ %>
-                <div><%= chat.postby_id.name %></div>
-                <div><%= chat.content %></div>
-            <%}) %>
+            <div class="chatbox" id="cscroll">            
+                <% chats.forEach(function(chat){ %>
+                    <div class="chattext"><%= chat.postby_id.name %> : <%= chat.content %> <span class="stime"><%= chat.ddate %></span> </div>
+                   
+                <%}) %>
+            </div>
         </div>
     </div>
     

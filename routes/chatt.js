@@ -1,4 +1,5 @@
 const express = require('express'),
+    dateFormat = require('dateformat'),
         router = express.Router();
 const   Card = require("../models/card"),
         middleware = require("../middleware/mid"),
@@ -6,16 +7,20 @@ const   Card = require("../models/card"),
         Chat = require("../models/chat"),
         Board = require("../models/board");
 
+
 router.post("/",function(req,res){
     console.log("--------------------"+req.body.text);
+    var now = new Date();
+    var g = dateFormat(now, "hh:MM  ddmmm ");
+    console.log("t "+g);
+     
     
     
+   
+    Chat.create({postby_id:req.body.uid,content:req.body.text,ddate:g,date:g},function(err,c){
 
-    
-    Chat.create({postby_id:req.body.uid,content:req.body.text},function(err,c){
-        console.log("will push "+c.content)
         Board.findById(req.body.bid,function(err,b){
-            console.log("push "+b)
+          
             b.chat.push(c)
             b.save()
         })

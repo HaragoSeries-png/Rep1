@@ -23,12 +23,11 @@
             else if(data.iscom=="notcom"){
                 console.log("case 2");
                 data.iscom="com"
-            }
-                     
+            }                     
                 $.ajax({
                     type: 'put',
                     url: "/todo/comp/"+data.tid,
-                    data: data,             // here I send the data when the button on the browser is clicked.
+                    data: data,            
                     
                 }).done(function( result ) {    
                     var nid = String(result)
@@ -81,22 +80,23 @@
     border-radius: 16px;
 }
 ul.task-list{
-    overflow:hidden; 
+    overflow-x:visible; 
     overflow-y:scroll;
-    
+    min-height:0px ;
     width: 103.5%;
-    
+    max-height: 600px;
+    padding-bottom: 10px;
 }
 #scroll::-webkit-scrollbar{
-    width: 6px;
-   
+    width: 3px;
+    margin-left: 0px;
 }
 #scroll::-webkit-scrollbar-thumb{
     background: rgba(148, 148, 148, 0.897);
     border-radius: 1000px;
 }
 #scroll::-webkit-scrollbar-track{
-    margin-left: 100px;
+   
     background-color: #ffffff;
 }
 button.task-name{

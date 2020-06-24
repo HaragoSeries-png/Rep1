@@ -4,6 +4,7 @@ const   Card = require("../models/card"),
         middleware = require("../middleware/mid"),
         Task = require("../models/task"),
         User = require("../models/user"),
+        Chat = require("../models/chat")
         Board = require("../models/board");
 const task = require('../models/task');
 
@@ -79,19 +80,27 @@ router.delete("/:bid",middleware.isLoggedIn,function(req,res){
            
             if(bo.owner==tuid){
                 Board.findOneAndDelete({_id:tbid},function(err,board){
+                    
                     (board.card).forEach(tcid => {
                         Card.findOneAndDelete({_id:tcid},function(err,card){
                             (card.task).forEach(ttid => {
                                 Task.findOneAndDelete({_id:ttid},function(err,task){
-                                    res.end()
+                                    
                                 })
-                                res.end()
+                                
                             })
-                            res.end()
+                            
                         });   
-                        res.end()     
+                          
                     })
-                    res.end() 
+                    console.log("chat "+board.chat[0]);
+                    
+                    board.chat.forEach(cc => {
+                        Chat.findOneAndDelete({_id:cc},function(err,chat){
+                            res.end()
+                        })
+                        res.end()
+                    })
                 })   
             }
             else{

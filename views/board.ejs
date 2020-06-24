@@ -258,25 +258,27 @@
         box-shadow: 0px 0px 16px rgb(245, 183, 177);
     }
 #popuptext{
-    display: none;
+    pointer-events: none;
     opacity: 0;
     margin-left: 15%;
     text-align: center;
     transition: all 0.1s ease-in-out ;
     padding: 30px 70px; 
+    margin-top: -100px;
     border-radius: 30px;
    
 }
 #popuptext.pp{
-    display: inline;
+    /* display: inline; */
+    position: absolute;
     opacity: 1;
-    transition: all 0.1s ease-in-out ;
-    margin-top: 20px;
+    transition: all 0.2s ease-in-out ;
+    transform: translateY(70px);
     text-align: center;
     font-size: 2rem;
     background-color:rgba(252, 188, 215, 0.555);
     padding: 30px 70px;
-   
+    pointer-events: fill;
 }
 i.inf{
     float: right;

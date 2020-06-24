@@ -16,7 +16,7 @@ router.get("/:id",middleware.isLoggedIn,function(req,res){
         else{  
                      
             Chat.find({_id:b.chat}).populate('postby_id').exec(function(err,ch){
-                console.log("chat "+ch)
+               
                 Card.find({_id:b.card}).populate('task').exec(function(error,ta){
                     if(error){
                         throw error

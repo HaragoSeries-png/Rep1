@@ -100,15 +100,64 @@ button.del-but{
     justify-content: space-evenly;
     grid-template-columns: 80% 20%;
     grid-gap: 10px;
-      
+    height: 50vh;  
     padding: 10px;
 }
 .chat{
     float: right;
     background-color: #85C1E9;
+    padding: 20px; 
+    height: 500px;
+    border-radius: 10px;
 }
+.chatbox{
+    margin-top: 16px;
+    border-style: double;
+    padding: 10px;
+    height: 80%;
+    max-height: 100%;
+    overflow-y: scroll;
+}.chattext{
+    padding: 2px;
+    border-bottom-style:solid ;
+    padding-bottom: 5px;
+    border-width: 1px;
+    transition: all 0.2s ease-in;
+}
+.chattext:hover{
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 0 3px #000;
+    transform: scale(1.06 ,1.03);
+}
+.chatin input[type="text"]{
+    background-color: transparent;
+    border-radius: 20px;
 
-
+}
+span.stime{
+    display: none;
+    float: right;
+    color: rgba(0, 0, 0, 0.575);
+}
+.chattext:hover span.stime{
+    transition: all 0.2s ease-in-out;
+    display: inline;
+    
+}
+#cscroll::-webkit-scrollbar{
+    width: 8px;
+}
+#cscroll::-webkit-scrollbar-thumb{
+    background-color: rgba(122, 99, 255, 0.432);
+    border-radius: 20px;
+}
+#cscroll::-webkit-scrollbar-thumb:hover{
+    background-color: rgb(102, 99, 255);
+}
+#cscroll::-webkit-scrollbar-track{
+    opacity: 0.1;
+    color: transparent;
+}
 .todolist{
     
     position: static;
@@ -120,6 +169,10 @@ button.del-but{
     padding: 10px;
     margin-bottom: 30px;
 
+}
+.todolist:hover{
+
+    box-shadow: 0 2px 20px #311010;
 }
 .ntdl{
     width: 98%;
@@ -137,13 +190,19 @@ h3{
 }
 
 .task{
-    width: 98%;
+    width: 94%;
     background:#ffffff;
     box-shadow:0 1px 5px rgba(145, 138, 138,1);
     padding: 5px;
     margin: 6px 3px;
+    margin-bottom: 8px;
+    margin-left:6px ;
     height: 60px;
     border-radius:8px ;
+    transition: all 0.2s ease-in-out;
+}
+.task:hover{
+    transform: scale(1.03);
 }
 
 .task i{

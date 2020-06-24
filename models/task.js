@@ -7,7 +7,8 @@ let tasktable = new mongoose.Schema({
         tdate:String,
         tdes:String,
         tprio:String,
-        tiscom:String
-   
+        tiscom:String,
+        
+        
 })  
 module.exports = mongoose.model("Task",tasktable);

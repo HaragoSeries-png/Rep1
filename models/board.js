@@ -18,8 +18,8 @@ let BoardSchema = new mongoose.Schema({
     ],
     chat:[
         {        
-                type:mongoose.Schema.Types.ObjectId,
-                ref:"Chat"      
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Chat"      
         }
     ],
     

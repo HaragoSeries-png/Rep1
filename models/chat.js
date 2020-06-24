@@ -11,7 +11,8 @@ let ChatSchema = new mongoose.Schema({
             content:String,
             date:{
                 type:Date
-            }
+            },
+            ddate:String
          
 })
 ChatSchema.plugin(passportLocalMongoose);
