@@ -1,38 +1,102 @@
 <style>
+    *{
+    margin: 0;
+    padding: 0;
+    font-family: 'Athiti', sans-serif;
+    box-sizing: border-box;
+    }
     body{
         background: linear-gradient(0deg, rgba(246,204,199,1) 0%, rgba(255,234,234,1) 37%, rgba(178,235,242,1) 96%);
     }
-    form.new{
+    .loginBox.new{
         margin-top: 220px;
         background-color: rgba(75, 75, 75, 0.452);
         
         width: 350px;
         padding: 30px;
     }
-    input[type="text"]{
-        height: 30px;
-        width: 250px;
-        font-size: 25px;
+    .loginBox input[type="text"]{
+        border: none;
+        border-bottom: 1px solid #ffffff;
+        background: transparent;
+        outline: none;
+        height: 40px;
+        color: #ffffff;
+        font-size: 16px;
+        margin-top: 10px;
     }
+   
     button{
         border: none;
         outline: none;
-        height: 40px;
-        background:  #AED6F1;
-        color: #ffffff;
-        font-size: 18px;
+        width: 100px;
+        height: 30px;
+        margin: 20px;
+        font-size: 15px;
         border-radius: 20px;
+
     }
+    .loginBox{
+        width: 350px;
+        height: 420px;
+        background: rgba(0,0,0,0.5);
+        color: #ffffff;
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        transform: translate(-50%,-50%);
+        box-sizing: border-box;
+        padding: 70px 30px;
+
+    }
+    .logo{
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        position: absolute;
+        top: -50px;
+        left: calc(50% - 50px)
+
+    }
+    h1{
+        margin: 0;
+        padding: 0 0 20px;
+        text-align: center;
+        font-size: 22px;
+        text-transform: uppercase;
+
+    }
+
+    .loginBox p{
+        margin: 0;
+        padding: 0;
+        font-weight: bold;
+
+    }
+
+    .loginBox input{
+        width: 100%;
+        margin-bottom: 20px;
+
+    }
+    .new .add{
+        background: #3498DB ;
+        color: #ffffff;
+    }
+      
 </style>
 <form action="/board/<%= currentUser._id %>" method="get" class="backbut">
-    <button style="background-color:#f1d6ae; color: #000000;">back</button>
+    <button style="background-color:#EC7063; color: #000000;">back</button>
 </form>
-<center>
+
+<div class="loginBox" >
+    <img src="../logo-1.png" class="logo">
+        <h1>ADD BOARD</h1>
     
     <form class="new" action="/invite?_method=put" method="post">
         <div>Add new board by id</div>
         <input type="hidden" name="uid" value="<%= currentUser._id %>">
         <input type="text" name="bid" placeholder="Place board id here">
-        <button type="submit" >Add</button>
+        <center><button type="submit" class="add">Add</button></center>
     </form>
-</center>
+</div>
