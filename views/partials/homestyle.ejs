@@ -54,8 +54,8 @@ ul li a:hover{
 .title{
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    left: 33%;
+    
 }
 
 .title h1{
@@ -126,50 +126,44 @@ ul li a:hover{
 #check{
     display: none;
 }
-
-
-@media screen and (max-width: 952px){
-    .title{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-
-    }
+@media (max-width: 320px){
+    
+}
+@media (max-width: 600px){
     .title h1{
-        color: #ffffff;
-        font-size: 70px;
-        width: 600px;
-        margin: 0 auto;
+        margin-left: 10%;
     }
-    ul li a {
-        font-size: 16px;
-        
+}
+@media (max-width: 900px){
+    .checkb{
+        display: block;
+    } 
+    ul{
+        position: absolute;
+        right: 0px;
+        height: 100vh;
+        top: -4vh;
+        background: #F4D4CD;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 40%;
+        transition: all 0.5s;
+    }  
+    ul li{
+        display: block;
+        margin:50px 0;
+        line-height: 30px;
+    }
+    ul li a{
+        font-size: 15px;
     }
 }
 
-@media screen and (max-width: 858px){
-    .title{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
 
-    }
-    .title h1{
-        color: #ffffff;
-        font-size: 70px;
-        width: 600px;
-        margin: 0 auto;
-    }
-    .checkb{
-        display: block;
-    }
 
-    body{
-        overflow-x: hidden;
-    }
-    ul{
+
+    /* ul{
         position: absolute;
         right: 0px;
         height: 100vh;
@@ -188,97 +182,10 @@ ul li a:hover{
     }
     ul li a{
         font-size: 15px;
-    }
+    } */
     
-}
-@media screen and (max-width: 768px){
-    ul li a {
-        font-size: 15px;
-    }
-    .title{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
 
-    }
-    .title h1{
-        color: #ffffff;
-        font-size: 70px;
-        width: 600px;
-        margin: 0 auto;
-    }
-    .checkb{
-        display: block;
-    }
 
-    body{
-        overflow-x: hidden;
-    }
-    ul{
-        position: absolute;
-        right: 0px;
-        height: 100vh;
-        top: -4vh;
-        background: #F4D4CD;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 40%;
-        transition: all 0.5s;
-    }
-    ul li{
-        display: block;
-        margin:50px 0;
-        line-height: 30px;
-    }
-    ul li a{
-        font-size: 15px;
-    }
-
-@media screen and (max-width: 858px){
-    .title{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-
-    }
-    .title h1{
-        color: #ffffff;
-        font-size: 70px;
-        width: 600px;
-        margin: 0 auto;
-    }
-    .checkb{
-        display: block;
-    }
-
-    body{
-        overflow-x: hidden;
-    }
-    ul{
-        position: absolute;
-        right: 0px;
-        height: 100vh;
-        top: -4vh;
-        background: #F4D4CD;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 40%;
-        transition: all 0.5s;
-    }
-    ul li{
-        display: block;
-        margin:50px 0;
-        line-height: 30px;
-    }
-    ul li a{
-        font-size: 15px;
-    }
     
-}
-    
-}
+
 </style>
