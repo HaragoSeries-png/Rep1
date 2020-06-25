@@ -149,6 +149,12 @@
         transform: translate(0px );
         pointer-events:all;
         margin-top: 9px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
     #menu.show li#logout{
         margin-top: 9px;
@@ -156,7 +162,13 @@
         opacity: 1;
         transition: all 0.2s ease-in-out;
         transform: translate(0px); 
-        pointer-events:all;       
+        pointer-events:all; 
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;      
     }
     #menu.show li#add-b{
         position:block ;
@@ -165,6 +177,12 @@
         pointer-events:all;
         margin-top: 9px;
         transition: all 0.2s ease-in-out;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
     li#profile:hover{
         transition: all 0.2s ease-in-out;
@@ -278,6 +296,7 @@
         width: 200px;
         height: 70px;
         background-color:#EEEEEE ;
+        transition: all 100ms ease-out;
         text-align: center;
         margin-right: 40px;
         border-radius: 10px;
@@ -341,6 +360,11 @@ i.inf:hover .tooltiptext {
   opacity: 1;
   /* transform: scale(1.05); */
     transition: all 0.2s ease-in-out;
+}
+li.nb:hover{
+    transition: all 100ms ease-in-out;
+    transform: scale(1.12);
+    background-color:#8fffba ;
 }
 
 
@@ -503,7 +527,7 @@ i.inf:hover .tooltiptext {
             </li>       
         <% }) %>
         <li class="tc nb">
-            <div >
+            <div class="ne" >
                 <form  class="newcf todolist" id="new-board-but" >
                     <input id="boardname" type="text" name="bname" placeholder=" Input card name here!" required style=" border-style: dashed; " >
                     <button  name="qid" value ='<%= user._id %>'class="butt" id="new-board-but" style="margin-left: 10px;" ><i class="fa fa-plus add"></i></button>

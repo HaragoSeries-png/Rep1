@@ -14,12 +14,12 @@ i{
     color: #000000;
 }
 .newTask_Box{
-    position: absolute;
+    position: sticky;
     top: 50%;
     left:50%;
     transform: translate(-50%,-50%);
     width: 320px;
-    height: 420px;
+    min-height: 420px;
     background: #e2e6ff;
     border-radius: 10px;
     box-shadow: 0 0px 30px rgb(255, 239, 151);
@@ -60,6 +60,13 @@ i{
     color: #42115e;
     font-size: 18px;
     border-radius: 20px;
+}
+textarea.des{
+    width: 100%;
+    max-width: 285%;
+    max-height: 500px;
+    background-color: transparent;
+    
 }
 
 </style>

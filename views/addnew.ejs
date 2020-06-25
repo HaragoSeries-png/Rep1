@@ -1,7 +1,7 @@
 
 <%-include("partials/header")%>
 <%-include("partials/newtaskStyle")%>
-<body style="background-image: url('../board02.jpg');background-size:100% 100%; background-repeat:no-repeat ; ">
+<body style="background-image: url('../board02.jpg');background-size:auto 100%; background-repeat:no-repeat ; ">
     
 
 <div class="newTask_Box">
@@ -14,7 +14,8 @@
         <p>Date</p>
         <input type="date" name="date" >
         <p>Description</p>
-        <input type="text" name="text" placeholder="Description">
+        <textarea rows = "5" class="des" cols = "45" name = "text" placeholder="Enter description here" >          
+        </textarea>
         <p>Priority</p>
         <input type="color" name="prio">
         <input type="hidden" name="id" value=<%= cid %>>

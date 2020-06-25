@@ -1,4 +1,15 @@
 <style>
+    @media (max-width:600px){
+        
+        .loginBox{
+            position: relative;
+            top:20%;
+            left: 20%;
+            width: 380px;
+            height: 450px;
+            
+        }
+    }
     *{
     margin: 0;
     padding: 0;
@@ -55,7 +66,7 @@
 
     }
         
-    .back button{
+    button.back{
         border: none;
         width: 100px;
         height: 30px;
@@ -87,6 +98,16 @@
         border-bottom: 1px solid #ffffff;
         margin-top: 20px;
         color:#F5F5F5;
+    }
+    @media (max-width:600px){
+        
+        .loginBox{
+            position: relative;
+            top:20%;
+            left: 20%;
+            width: 380px;
+            height: 450px;
+        }
     }
     
         
@@ -124,11 +145,11 @@
     })
 </script>
 
-<body style="background-image: url('../add01.jpg');background-size:100% 100%; background-repeat:no-repeat ; " >
+<body style="background-image: url('../add01.jpg');background-size:auto 100%; background-repeat:no-repeat ; " >
     
 
 <form action="/board/<%= currentUser._id %>" method="get" class="back">
-    <button>back</button>
+    <button class="back">back</button>
 </form>
 <!-- <div id="name"><span id="att">name</span> : <%= currentUser.name %></div> -->
 <div class="loginBox" >

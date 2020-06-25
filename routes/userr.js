@@ -18,7 +18,7 @@ router.post('/signup', function(req,res){
         if(err){
             console.log("erree");
             console.log(err);
-           
+            
             return res.render('./signup');
         }
         console.log("bbbbbbbbbbbbbbbb");
@@ -90,23 +90,42 @@ router.put("/invite",middleware.isLoggedIn,function(req,res){
         bid =req.body.bid;
     console.log("uid "+uid+" bid "+bid)
     Board.findById(bid,function(err,bo){
-        console.log("found = "+bo)
+        var tru =true;
+        
         if(!bo){
             console.log("wrong");
-            
+            req.flash("error","112 Board not found")
             return res.redirect("back")
         }
-        else if(bo.owner==uid){
-            console.log("arlldlasdas")
-            return res.redirect("back")
+        (bo.team).forEach(function(t){
+            console.log(t);            
+            if(t==uid){
+                console.log("change ");                
+                tru = false;
+                return;
+            }
+            
+        });
+        console.log("tru "+tru)
+        console.log("f f "+(bo.owner==uid||!tru));
+
+        if(bo.owner==uid||!tru){
+           
+            req.flash("error","You already have it!")
+            console.log("ownn")
+            res.redirect("back")
         }
         else{
+           
+            console.log("case3 "+bo.team);
+            
             User.findOne({_id:uid},function(err,u){                                    
                 u.board.push(bid)
                 u.save()
                 console.log("addd boo");
-               
-                
+                bo.team.push(uid)
+                bo.save()   
+                req.flash("success","Add board success")
                 res.redirect("/board/"+uid)              
             })
         }

@@ -7,6 +7,7 @@ const   Card = require("../models/card"),
         Chat = require("../models/chat")
         Board = require("../models/board");
 const task = require('../models/task');
+const board = require('../models/board');
 
 router.get("/:id",middleware.isLoggedIn,function(req,res){
    
@@ -15,14 +16,13 @@ router.get("/:id",middleware.isLoggedIn,function(req,res){
             throw error
         }  
         else{    
-            console.log('boarddd '+uid.board)        
+            // console.log('boarddd '+uid.board)        
             Board.find({_id:uid.board}).populate('card','team').exec(function(error,bo){
                 if(error){
                     throw error
                 }
                 else{   
-                    
-                                   
+                             
                     res.render("board",{board:bo,uid:req.params.id,user:uid})
                 }               
             })
@@ -53,7 +53,8 @@ router.post("/new",middleware.isLoggedIn,function(req,res){
                 
                 let bid = r._id;
      
-                    
+                r.team.push(u._id)
+                r.save()       
                 u.board.push(bid)
                 u.save()
                 var j = JSON.stringify(bid)

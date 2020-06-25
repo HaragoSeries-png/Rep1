@@ -42,7 +42,7 @@
         background: rgba(0,0,0,0.5);
         color: #ffffff;
         top: 50%;
-        left: 50%;
+        left: 55%;
         position: absolute;
         transform: translate(-50%,-50%);
         box-sizing: border-box;
@@ -83,11 +83,13 @@
         background: #3498DB ;
         color: #ffffff;
     }
+    .alert{
+        margin-left: -50%;
+    }
       
 </style>
-<body style="background-image: url('../add01.jpg');background-size:100% 100%; background-repeat:no-repeat ; ">
-    
-
+<body style="background-image: url('../add01.jpg');background-size:auto 100%; background-repeat:no-repeat ; ">
+<%- include("partials/flash") %>
 <form action="/board/<%= currentUser._id %>" method="get" class="backbut">
     <button style="background-color:#EC7063; color: #000000;">back</button>
 </form>

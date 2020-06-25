@@ -84,7 +84,7 @@
             <li class="tc">
                 <form  id="new-card"  class="newcf todolist" >
                     
-                    <input type="text"  placeholder=" Input card name here!" id="card-name" style=" border-style: dashed; " >
+                    <input type="text"  placeholder=" Input card name here!" id="card-namee" style=" border-style: dashed; " >
                     <button type="button"  value ='<%= bid %>'class="butt" id="new-card-but" style="margin-left: 10px;" ><i class="fa fa-plus add"></i></button>
                 </form>
             </li>
@@ -122,7 +122,7 @@ window.onload=function(){
             e.preventDefault();
             
             var data ={
-                cname : $('form#new-card').children("input#card-name").val(),
+                cname : $('form#new-card').children("input#card-namee").val(),
                 bid   : $('form#new-card').children("button#new-card-but").val()
             } 
                 $.ajax({
@@ -132,6 +132,7 @@ window.onload=function(){
                     
                 }).done(function( result ) {                    
                     console.log( "Data Saved: " + result );
+                    removetext()
                     creatc(result,data.bid,data.cname)
                 }).fail(function(result){
                     console.log("Fail! " +result.data);
@@ -206,6 +207,10 @@ window.onload=function(){
             child.setAttribute("id",nid)
             child.innerHTML = '<div class="todolist "><div class = "cover-img"><form id="card-name" class="ninline" ><input type="text" id="name" value=  "'+name+'" autocomplete="off" onclick="event.stopPropagation()" ><input class="esub" id="cid" type="hidden" value='+id+'></input></form>   <form id="card-del inline" class="inline card-del"><input type="hidden" value='+bid+' id="us"><button class="del-but" type="button" value='+id+' name="cid"><i class="fa fa-times-circle-o" role="button"></i></button></form></div><div class="content"></div><div class ="notComp "><h3>Todo</h3><ul id="scroll"class="task-list" > </ul></div><form class="addtask " ><div class="input-button " ><a  class="add-todo" href="/new/'+bid+'/'+id+'></a><button class="butt  inline"  name='+id+'id="new-task-but" value='+id+'><i class="fa fa-plus add addtaskbut"></i></button></a></div></form> </div> </div>';
             $('.tc:last-of-type').before(child)          
+        }
+        var removetext = function () {
+            var t= document.getElementById("card-namee")       
+            t.value = " "
         }
         
     });

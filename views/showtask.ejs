@@ -15,7 +15,11 @@
         <p>Due Date</p>
         <input type="date" name="date" value="<%= task.tdate %>" >
         <p>Description</p>
-        <input type="text" name="des" value="<%= task.tdes %>" placeholder="Description">
+        <textarea rows = "5" class="des" cols = "60" name = "des" >
+            <%= task.tdes %>
+          
+        </textarea>
+       
         <p>Priority</p>
         <input type="color" name="prio" value="<%= task.tprio %>">
         <input type="submit" name="submit" value="DONE">

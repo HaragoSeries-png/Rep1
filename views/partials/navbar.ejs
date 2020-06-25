@@ -50,7 +50,7 @@
             <li id="tog"><a class="active" href="/signup  ">SIGN UP</a></li>
             <li id="tog"><a class="active" href="/login ">LOG IN</a></li>
             <% } else { %>
-                
+            <li><a href="/board/<%= currentUser._id %>">Board</a></li>    
             <li><a href='/logout'>Log out</a></li>   
             <% } %>
         </ul>
