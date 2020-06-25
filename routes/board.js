@@ -85,7 +85,7 @@ router.delete("/:bid",middleware.isLoggedIn,function(req,res){
                         Card.findOneAndDelete({_id:tcid},function(err,card){
                             (card.task).forEach(ttid => {
                                 Task.findOneAndDelete({_id:ttid},function(err,task){
-                                    
+                                    console.log("t t "+task)
                                 })
                                 
                             })
@@ -101,7 +101,9 @@ router.delete("/:bid",middleware.isLoggedIn,function(req,res){
                         })
                         res.end()
                     })
+                    res.end()
                 })   
+                res.end()
             }
             else{
                 res.end()

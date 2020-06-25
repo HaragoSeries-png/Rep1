@@ -6,10 +6,7 @@
     box-sizing: border-box;
 }
 
-body{
-    background: rgb(237, 187, 153 );
-    
-}
+
 h1 a{
     margin: 10px;
     margin-top: 10px;
@@ -23,11 +20,10 @@ h1 a{
     width: 100px;
     height: 30px;
     margin: 20px;
-    background:  #3498DB;
+    background:  #414b61;
     color: #ffffff;
     font-size: 15px;
     border-radius: 20px;
-
 }
  /* button.del-but{
     opacity: 0;
@@ -95,6 +91,10 @@ button.del-but{
    
     
 } 
+input#name{
+    background-color: transparent;
+    color: #ffffff;
+}
 .wrapper{
     display: grid;
     justify-content: space-evenly;
@@ -105,7 +105,7 @@ button.del-but{
 }
 .chat{
     float: right;
-    background-color: #85C1E9;
+    background-color: #778899;
     padding: 20px; 
     height: 450px;
     border-radius: 10px;
@@ -113,27 +113,38 @@ button.del-but{
 .chatbox{
     margin-top: 16px;
     border-style: double;
+    border-color: #081e2c;
     padding: 10px;
     height: 90%;
     max-height: 100%;
     overflow-y: scroll;
 }.chattext{
+    margin-top: 6px;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    font-size: 20px;
     padding: 2px;
     border-bottom-style:solid ;
     padding-bottom: 5px;
     border-width: 1px;
     transition: all 0.2s ease-in;
+    overflow-x:hidden;
 }
 .chattext:hover{
+    transform: scale(1.04 ,1.03);
     transition: all 0.2s ease-in-out;
-    box-shadow: 0 0 3px #000;
-    transform: scale(1.06 ,1.03);
+    box-shadow: 0 0 3px rgb(117, 117, 117);
+    
 }
 .chatin input[type="text"]{
     background-color: transparent;
     border-radius: 20px;
     height: 25px;
-    width: 170px;
+    width: 50%;
+}
+.chatin input[type="text"]:hover{
+    background-color: #717f8f;
+    transition: all 0.2s ease-in-out;
 }
 span.stime{
     display: none;
@@ -144,6 +155,9 @@ span.stime{
     transition: all 0.2s ease-in-out;
     display: inline;
     
+}
+i{
+    color: #EEE8AA;
 }
 #cscroll::-webkit-scrollbar{
     width: 8px;
@@ -164,16 +178,22 @@ span.stime{
     position: static;
     left: 50px;    
     width: 285px;    
-    background: #ffffff;
+    background: #2f3038;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(62,9,11,3);   
+    box-shadow: 0 2px 10px rgb(29, 29, 29);   
     padding: 10px;
     margin-bottom: 30px;
-
+    color: aliceblue;
 }
 .todolist:hover{
 
-    box-shadow: 0 2px 20px #311010;
+    box-shadow: 0 2px 20px #131313;
+}
+.fa-plus{
+    color: #EEE8AA
+}
+.fa-times-circle-o{
+    color: #EEE8AA
 }
 .ntdl{
     width: 98%;
@@ -192,8 +212,9 @@ h3{
 
 .task{
     width: 94%;
-    background:#ffffff;
-    box-shadow:0 1px 5px rgba(145, 138, 138,1);
+    background:#2f3038;
+    box-shadow:0 0px 7px #eeeac5;
+    color: #ffffff;
     padding: 5px;
     margin: 6px 3px;
     margin-bottom: 8px;
@@ -203,6 +224,7 @@ h3{
     transition: all 0.2s ease-in-out;
 }
 .task:hover{
+    background:#27282e;
     transform: scale(1.03);
 }
 
@@ -273,7 +295,7 @@ form.innline{
 }
 
 .newcf{
-    background-color:#ffffff;
+    background-color:#2b2c33;
     width: 280px;
     height: 60px;
     padding: 0px;
@@ -281,11 +303,17 @@ form.innline{
 }
 
 .newcf input[type="text"]{
-     
-     height: 40px;
-     width: 210px;
-     margin-top: 10px;
-     margin-left: 10px;
+    background-color: transparent; 
+    border-color: #EEE8AA;
+    border-width: 1.5px;
+    height: 40px;
+    width: 210px;
+    margin-top: 10px;
+    margin-left: 10px;
+    padding-left: 2px;
+    color: #ffffff;
+    font-size: 14px;
+    outline: none;
 }
 .com{
     text-decoration: line-through;
@@ -296,7 +324,7 @@ form.innline{
     text-align: center;
     
     /* box-shadow:0 1px 5px rgba(145, 138, 138,1); */
-    
+    border-color:  #eed0aa;
     margin: 6px 0;
     
     border-radius:8px ;
@@ -306,6 +334,16 @@ form.innline{
     width: 240px;
     height: 50px;
     padding-top: 16px;
+}
+.chat button{
+    height: 30px;
+    width: 50px;
+    border-radius: 20px;
+    border-style: solid;
+    border-color: white;
+    background-color: #99abc0;
+    margin-left: 8px;
+    color: #e7f3ff;
 }
 
 

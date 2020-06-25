@@ -26,7 +26,7 @@ router.post('/signup', function(req,res){
             console.log("reg complete");
             
             console.log(user._id)
-            res.redirect('/login');
+            res.redirect('/board/'+user._id);
         });
     });
 });

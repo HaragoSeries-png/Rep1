@@ -1,6 +1,9 @@
 <%- include("partials/header") %> 
 <%- include("partials/tod") %>
 <style>
+    body{
+        
+    }
     li.tc{
         float:left;
         list-style:none;
@@ -32,17 +35,22 @@
         border-style:none ;
         outline-style:none;        
     }
+    image{
+        height: 100%;
+        width: 100%;
+    }
     
 </style>
 
+<body style="background-image: url('../todobackground.jpg');background-size:100% 200%; background-repeat:no-repeat ; ">
     
+ 
 
-<h1><%= user %> <a href="/logout">logout</a></h1>
 <form action="/board/<%= currentUser._id %>" method="get" class="backbut">
-    <button>back</button>
+    <button>< back</button>
 </form>
 
-
+    
     <div class="wrapper" >  
         <ul id="card-list" class="grid-container">
         <% tad.forEach(function(tadd){ %>
@@ -68,7 +76,7 @@
                                 <button class="butt inline" type="button" name='cid'id="new-task-but" value='<%=tadd._id %>'><i class="fa fa-plus add addtaskbut"></i></button>
                                 </a>     
                             </div>
-                        </form>
+                        </form>                        
                 </div>
             </li>
                     
@@ -84,10 +92,10 @@
         </ul>
         <div class="chat">
             <form action="/chat" method="post" class="chatin">
-                <input type="text" name="text">
+                <input type="text" name="text" required>
                 <input type="hidden" name="bid" value="<%= bid %>">
                 <input type="hidden" name="uid" value="<%= currentUser._id %>">
-                <button type="submit"></button>
+                <button type="submit">enter</button>
             </form>
             <div class="chatbox" id="cscroll">            
                 <% chats.forEach(function(chat){ %>
@@ -99,7 +107,7 @@
     </div>
     
         
-   
+</body>      
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 window.onload=function(){

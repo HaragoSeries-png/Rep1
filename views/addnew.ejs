@@ -1,8 +1,12 @@
 
+<%-include("partials/header")%>
 <%-include("partials/newtaskStyle")%>
+<body style="background-image: url('../board02.jpg');background-size:100% 100%; background-repeat:no-repeat ; ">
+    
+
 <div class="newTask_Box">
     <form action="/todo/<%= bid %>" method="post">
-        <a href="#0" class="back">
+        <a href="/todo/<%= bid %>" class="back">
             <i class="fa fa-arrow-left" aria-hidden="true"></i>
         </a>
         <p>Task</p>
@@ -19,5 +23,5 @@
     </form>
 </div>
 
-
+</body>
 

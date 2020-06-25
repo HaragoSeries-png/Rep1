@@ -40,7 +40,7 @@
         transform: scale(1.12);
         width: 200px;
         height: 100px;
-        background-color:#FDEDEC ;
+        background-color:#8fffba ;
         text-align: center;
         margin-right: 40px;
         border-radius: 10px;
@@ -80,7 +80,7 @@
     }
 
     button.dropdown{
-        background-color:#D98880;
+        background-color:#8fffba;
         width: 100px;
         height: 40px;
         float: left;
@@ -101,8 +101,11 @@
         transition: all 100ms ease-in-out;
         margin-left: 250px;
         font-size: 20px;
-        
-    
+        background-color: #8fffba;
+        padding: 12px 5px;
+        padding-left: 8px;
+        padding-right: 8px;
+        border-radius: 20px;
     }
     .dropcontent li#logout{
         display: block;
@@ -112,6 +115,12 @@
         pointer-events: none;
         transition: all 100ms ease-in-out;
         font-size: 20px;
+        background-color: #8fffba;
+        padding: 12px 5px;
+        border-radius: 20px;
+        padding-left: 6px;
+        padding-right: 6px;
+    
     }
     .dropcontent li#add-b{
         display: block;
@@ -122,6 +131,11 @@
         transition: all 100ms ease-in-out;
         font-size: 20px;
         cursor: pointer;
+        background-color: #8fffba;
+        padding: 12px 0px;
+        padding-left: 6px;
+        padding-right: 6px;
+        border-radius: 20px;
     }
     #add-b{
         cursor: pointer;
@@ -131,14 +145,16 @@
     #menu.show li#profile{
         position:block ;
         opacity: 1;
+        transition: all 0.2s ease-in-out;
         transform: translate(0px );
         pointer-events:all;
-        margin-top: 10px;
+        margin-top: 9px;
     }
     #menu.show li#logout{
-        margin-top: 10px;
+        margin-top: 9px;
         position:block ;
         opacity: 1;
+        transition: all 0.2s ease-in-out;
         transform: translate(0px); 
         pointer-events:all;       
     }
@@ -147,8 +163,20 @@
         opacity: 1;
         transform: translate(0px);
         pointer-events:all;
-        margin-top: 10px;
-        
+        margin-top: 9px;
+        transition: all 0.2s ease-in-out;
+    }
+    li#profile:hover{
+        transition: all 0.2s ease-in-out;
+        transform: scale(1.02);
+    }
+    li#logout:hover{
+        transition: all 0.2s ease-in-out;
+        transform: scale(1.02);
+    }
+    li#add-b:hover{
+        transition: all 0.2s ease-in-out;
+        transform: scale(1.02);
     }
     #menu.show  button.dropdown{    
         pointer-events:all;      
@@ -277,7 +305,7 @@
     transform: translateY(70px);
     text-align: center;
     font-size: 2rem;
-    background-color:rgba(252, 188, 215, 0.555);
+    background-color:rgba(61, 255, 109, 0.788);
     padding: 30px 70px;
     pointer-events: fill;
 }
@@ -298,8 +326,8 @@ i.inf .tooltiptext {
   opacity: 0;
   width: 80px;
   margin-top: -10px;
-  background-color:rgba(172, 56, 43, 0.514);
-  color: #fff;
+  background-color:rgba(255, 252, 81, 0.678);
+  color: #000;
   text-align: center;
   border-radius: 6px;
   padding: 2px 0;
@@ -360,6 +388,7 @@ i.inf:hover .tooltiptext {
                 }).done(function( result ) {                    
                     removetext("boardname")
                     console.log( "Data Saved: " + result );
+                    
                     dell(data.bid)
                     
                 }).fail(function(result){
@@ -414,6 +443,7 @@ i.inf:hover .tooltiptext {
         popup.classList.remove("pp");
     }
     function dell(id){
+       
         var item = document.getElementById(id)
         item.parentNode.removeChild(item);
     };
@@ -437,6 +467,9 @@ i.inf:hover .tooltiptext {
     
 </script>
 <%- include("partials/flash") %>
+<body style="background-image: url('../board02.jpg');background-size:100% 100%; background-repeat:no-repeat ; ">
+    
+
 <div class="head">
     <div class ="menu" id="menu">
         <button class="dropdown" onclick="dr()"><%= user.name %></button>
@@ -484,3 +517,4 @@ i.inf:hover .tooltiptext {
 
 </div>
 
+</body>
